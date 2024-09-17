@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>Login page</h1>
+
+    <form action="{{ url_for('auth.login') }}" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        {{ form.username.label }} {{ form.username }} {{ form.username.errors[0] }}
+        {{ form.password.label }} {{ form.password }} {{ form.password.errors[0] }}
+        {{ form.remember_me }} {{ form.remember_me.label}}
+        <button type="submit">Submit</button>
+      </form>
+{% endblock %}

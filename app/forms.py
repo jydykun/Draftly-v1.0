@@ -1,0 +1,61 @@
+from flask_wtf import FlaskForm, RecaptchaField
+from flask_wtf.file import FileField, FileAllowed, FileSize, FileRequired
+from wtforms import StringField, PasswordField, EmailField, BooleanField, \
+    TextAreaField, SelectField
+from wtforms.validators import DataRequired, EqualTo, Email, Length, ValidationError
+from app.models import db, User, Category
+from app import Config
+
+#-----SignupForm------#
+
+class SignupForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired(), Length(min=6, max=25)])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=8)])
+    confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")])
+    email = EmailField("Email", validators=[DataRequired(), Email(check_deliverability=True)])
+    recaptcha = RecaptchaField()
+
+    def validate_username(self, username):
+        user = db.session.scalar(db.select(User).where(User.username == username.data))
+        if user is not None:
+            raise ValidationError("This username is already exist.")
+        
+    def validate_email(self, email):
+        user = db.session.scalar(db.select(User).where(User.email == email.data))
+        if user is not None:
+            raise ValidationError("This email address is already exist.")
+
+#-----End of SignupForm------#
+        
+#-----LoginForm------#
+
+class LoginForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    remember_me = BooleanField("Remember Me")
+
+#-----End of LoginForm------#
+
+#-----PostForm------#
+
+class PostForm(FlaskForm):
+    title = StringField(validators=[DataRequired(), Length(max=50)])
+    body = TextAreaField(validators=[DataRequired()])
+    category = SelectField("Category: ", choices=[])
+    feature_image = FileField(
+        "Featured Image",
+        validators=[
+            FileRequired(),
+            FileSize(
+                Config.MAX_FILE_SIZE,
+                message=f"File size must not exceed {int(Config.MAX_FILE_SIZE/1000000)}MB"
+                ),
+            FileAllowed(["jpg", "png", "jpeg", "webp"], "Images only!")
+            ]
+        )
+    
+#-----End of PostForm-----#
+
+
+class MailingListForm(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired(), Email(check_deliverability=True)])

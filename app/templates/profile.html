@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>Dashboard Page</h1>
+    <h1>{{ current_user.username }}</h1>
+    <p>All Posts</p>
+    <p>Add New Post</p>
+    <a href="{{ url_for('main.index')}}">Home</a>
+    <a href="#">Settings</a>
+    <a href="{{ url_for('auth.logout')}}">Logout</a>
+    
+    <form action="{{ url_for('main.profile', username=current_user.username) }}" method="POST" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        {{ form.title }}
+        {{ form.body(id="tinymce_editor") }}
+        {{ form.category.label }}{{ form.category }}
+        {{ form.feature_image.label }}{{ form.feature_image }}
+        <button type="submit">Save</button>
+    </form>
+
+    <p><img id="preview-image" src="" alt=""></p>
+
+    {{ form.errors }}
+{% endblock %}

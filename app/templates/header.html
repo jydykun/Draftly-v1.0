@@ -1,0 +1,36 @@
+<header class="bg-slate-900 text-slate-200 overflow-auto">
+    <nav class="container max-w-screen-xl mx-auto px-8">
+        <div class="md:flex md:justify-between">
+            <div class="flex justify-between content-center py-4">
+
+                <!--Logo Container-->
+                <a class="inline-block" href="{{ url_for('main.index') }}">
+                    <img class="size-12" src="{{ url_for('main.uploaded_image', filename='Image_20240910_021709.webp' )}}" alt="">
+                </a>
+
+                <!--Menu Burger Icon-->
+                <button class="place-self-center md:hidden" id="menu-burger-icon">
+                    <span class="bg-slate-200"></span>
+                    <span class="bg-slate-200"></span>
+                    <span class="bg-slate-200"></span>
+                </button>
+
+            </div>
+
+            <!--Collapsible Menu-->
+            <ul class="mb-5 hidden md:flex md:mb-0 md:items-center" id="collapse">
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('main.profile', username=current_user.username) }}">Profile</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            {% else %}
+                {% for category in categories %}
+                    <li class="{% if loop.last %}pb-2{% endif %} md:pb-0"><a class="navbar-link" href="{{ url_for('main.category_page', category_key=category.key) }}">{{category.name}}</a></li>
+                {% endfor %}
+                <li class="pt-2 border-t-2 border-slate-800 md:pt-0 md:border-t-0 md:border-l-2"><a class="navbar-link" href="{{ url_for('auth.login') }}">Login</a></li>
+                <li><a class="navbar-link" href="{{ url_for('auth.signup') }}">Sign Up</a></li>
+            {% endif %}
+            </ul>
+
+        </div>
+    </nav>
+</header>

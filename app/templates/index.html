@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<main>
+    <div class="mb-10 h-16 bg-slate-500">
+
+    </div>
+
+
+    <div class="container max-w-screen-xl mx-auto px-8">
+        <p class="py-10 text-2xl">Latest Articles</p>
+        <div class="grid grid-cols-1 md:grid-cols-12 md:gap-10">
+            <div class="col-span-8 grid grid-cols-1 md:grid-cols-2 md:gap-10">
+                {% for post in posts %}
+                <article class="mb-10">
+                    <a href="{{ url_for('main.single_post', post_id=post.id) }}">
+                        <div class="border-b-4 border-slate-900 max-h-60 overflow-hidden">
+                            <img src="{{ url_for('main.uploaded_image', filename=post.featured_image)}}" alt="">
+                        </div>
+                        <p class="my-3 uppercase">{{ post.c_posts.name }}</p>
+                        <h2 class="text-2xl">{{ post.title }}</h2>
+                    </a>
+                    <p class="my-3"><i>By {{ post.u_posts.username }}</i></p>
+                    {{ post.body_without_images | safe }}
+                </article>
+                {% endfor %}
+            </div>   
+            
+            
+            
+            <aside class="col-span-4 md:pl-10 md:border-l-2 md:border-slate-200">
+                <div class="p-8 text-center border-4 border-slate-400">
+                    <p class="uppercase">Sign Up For Our</p>
+                    <p class="mb-10 text-4xl">Mailing List</p>
+                    <form action="">
+                        {{ mlform.email(
+                            class="w-full px-3 py-1 ring-2 ring-slate-400 focus: outline-none focus:ring-2 focus:ring-slate-900",
+                            placeholder="Email") }}
+                        <button class="block w-full px-3 py-1 my-3 text-slate-100 bg-slate-900" type="submit">Sign Up</button>
+                    </form>
+                    <p>No spam, we promise!</p>
+                </div>
+            </aside>
+        </div>  
+
+        {#
+        <div>
+            {% if posts.has_prev %}
+            <a href="{{ url_for('main.index', page=posts.prev_num) }}">Prev</a>
+            {% endif %}
+
+            {% for page in posts.iter_pages() %}
+                {% if page %}
+                    {% if page != posts.page %}
+                        <a href="{{ url_for('main.index', page=page) }}">{{ page }}</a>
+                    {% else %}
+                        <strong>{{ page }}</strong>
+                    {% endif %}
+                {% else %}
+                    <span class=ellipsis>…</span>
+                {% endif %}
+            {% endfor %}
+
+            {% if posts.has_next %}
+                <a href="{{ url_for('main.index', page=posts.next_num) }}">Next</a>
+            {% endif %}
+        </div>#}
+
+
+    </div>
+
+</main>
+
+{% endblock %}
