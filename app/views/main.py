@@ -1,6 +1,5 @@
 import os
 from datetime import datetime
-from PIL import Image
 from flask import Blueprint, render_template, request, \
     redirect, url_for, flash, current_app, jsonify, \
     send_from_directory
@@ -154,9 +153,6 @@ def upload():
 def single_post(post_id):
     post = db.get_or_404(Post, post_id)
     return render_template("post.html", post=post)
-
-
-
     
 
 @main.route("/images/<filename>")
