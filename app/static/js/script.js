@@ -2,11 +2,13 @@ window.addEventListener("DOMContentLoaded", ()=>{
     
     // TinyMCE Initialization
     tinymce.init({
-        license_key: "gpl",
         selector: "#tinymce_editor",
-        plugins: "image",
-        toolbar: "image",
-        images_upload_url: "/upload"
+        license_key: "gpl",
+        plugins: "image save visualblocks preview help link autolink",
+        toolbar: "undo redo image cancel preview help link | align fontfamily styles",
+        images_upload_url: "/upload",
+        link_assume_external_targets: true,
+        link_context_toolbar: true
     });
 
 
