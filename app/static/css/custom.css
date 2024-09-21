@@ -4,9 +4,6 @@ Credits to
 https://codepen.io/designcouch/pen/ExvwPY
 for this wonderful menu animation
 
-https://codepen.io/designcouch/pen/ExvwPY
-for this wonderful menu animation
-
 ****/
 
 #menu-burger-icon {
@@ -73,48 +70,3 @@ for this wonderful menu animation
     -o-transform: rotate(-135deg);
     transform: rotate(-135deg);
   }
-
-  
-  
-  .ml11 .text-wrapper {
-    position: relative;
-    display: inline-block;
-    padding-top: 0.1em;
-    padding-right: 0.05em;
-    padding-bottom: 0.15em;
-  }
-  
-  .ml11 .line {
-    opacity: 0;
-    position: absolute;
-    left: 0;
-    height: 100%;
-    width: 3px;
-    background-color: #fff;
-    transform-origin: 0 50%;
-  }
-  
-  .ml11 .line1 { 
-    top: 0; 
-    left: 0;
-  }
-  
-  .ml11 .letter {
-    display: inline-block;
-    line-height: 1em;
-  }
-
-
-
-/* ---- particles.js container ---- */
-#particles-js {
-  position: relative;
-}
-
-.particles-js-canvas-el {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}

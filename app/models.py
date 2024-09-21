@@ -93,4 +93,13 @@ class Comment(db.Model):
     u_comments: Mapped["User"] = relationship(back_populates="comments")
 
 
+class Subscriber(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(String(50), unique=True)
+
+    # Debugging Purposes
+    def __repr__(self) -> str:
+        return f"Subscriber(id={self.id}, email={self.email})"
+
+
 

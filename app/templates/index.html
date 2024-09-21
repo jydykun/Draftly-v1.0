@@ -3,16 +3,11 @@
 {% block body %}
 
 <main>
-    <section class="bg-slate-800 overflow-hidden" id="particles-js">
+    <section class="bg-slate-800 overflow-hidden">
         <div class="container max-w-screen-xl mx-auto px-8">
             <div class="py-40 text-center text-slate-100">
-                <h1 class="mb-5 text-6xl font-bold ml11">
-                    <span class="text-wrapper">
-                      <span class="line line1"></span>
-                      <span class="letters">The Coding Journal</span>
-                    </span>
-                </h1>
-                <p><i>Deep Dives into the World of Software Development</i></p>
+                <h1 class="mb-5 text-6xl font-bold">The Coding Journal</h1>
+                <p class="text-lg"><i>Deep Dives into the World of Software Development</i></p>
             </div>
         </div>
     </section>
@@ -21,7 +16,7 @@
     <div class="container max-w-screen-xl mx-auto px-8">
         <p class="py-10 text-2xl">Latest Articles</p>
         <div class="grid grid-cols-1 md:grid-cols-12 md:gap-10">
-            <div class="col-span-8 grid grid-cols-1 md:grid-cols-2 md:gap-10">
+            <div class="col-span-8 grid grid-cols-1 mb-10 md:grid-cols-2 md:gap-10">
                 {% for post in posts %}
                 <article class="mb-10">
                     <a href="{{ url_for('main.single_post', post_id=post.id) }}">
@@ -37,20 +32,9 @@
                 {% endfor %}
             </div>   
             
-            
-            
+            <!-----Sidebar----->
             <aside class="col-span-4 md:pl-10 md:border-l-2 md:border-slate-200">
-                <div class="p-8 text-center border-4 border-slate-400">
-                    <p class="uppercase">Sign Up For Our</p>
-                    <p class="mb-10 text-4xl">Mailing List</p>
-                    <form action="">
-                        {{ mlform.email(
-                            class="w-full px-3 py-1 ring-2 ring-slate-400 focus: outline-none focus:ring-2 focus:ring-slate-900",
-                            placeholder="Email") }}
-                        <button class="block w-full px-3 py-1 my-3 text-slate-100 bg-slate-900" type="submit">Sign Up</button>
-                    </form>
-                    <p>No spam, we promise!</p>
-                </div>
+                {% include "subscribe.html" %}
             </aside>
         </div>  
 

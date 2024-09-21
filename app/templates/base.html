@@ -6,15 +6,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css')}}">
     <script src="{{ url_for('static', filename='js/tinymce_7.3.0/tinymce.min.js') }}" referrerpolicy="origin"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <title>{{ title }}</title>
 </head>
 <body>
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <ul class=flashes>
+            <ul class="flashes">
                 {% for message in messages %}
                 <li>{{ message }}</li>
                 {% endfor %}

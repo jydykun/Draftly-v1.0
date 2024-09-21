@@ -6,8 +6,8 @@ from flask import Blueprint, render_template, request, \
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from app import Config
-from app.models import db, User, Post, Category
-from app.forms import PostForm, MailingListForm
+from app.models import db, User, Post, Category, Subscriber
+from app.forms import PostForm, SubscribeForm
 from app.utils import remove_image_tag
 
 
@@ -21,30 +21,26 @@ main = Blueprint("main", __name__)
 # A context processor runs before each request, injecting variables into the template context for all routes.
 # You can define a context processor that retrieves categories and makes them available in every template.
 @main.context_processor
-def inject_category_page():
+def inject():
     # Query all the categories
     categories = db.session.scalars(db.select(Category)).all()
 
-    mlform = MailingListForm()
+    subscribe_form = SubscribeForm()
 
     return {
         "categories": categories,
-        "mlform": mlform
+        "subscribe_form": subscribe_form
         }
 
 
-
 # Homepage ----------------------------------------------------------
-@main.route("/")
-@main.route("/index")
+@main.route("/", methods=["GET", "POST"])
 def index():
+
     # Query all the posts
     #posts = db.paginate(db.select(Post).order_by(Post.timestamp.desc()), per_page=2, error_out=False)
 
     posts = db.session.scalars(db.select(Post).order_by(Post.timestamp.desc()).limit(4)).all()
-
-    # Query all the categories
-    #categories = db.session.scalars(db.select(Category)).all()
 
     # Remove the image tag of the post in the homepage
     for post in posts:
@@ -58,8 +54,6 @@ def category_page(category_key):
     category = db.first_or_404(db.select(Category).where(Category.key == category_key))
 
     return render_template("category_page.html", category=category)
-
-
 
 
 @main.route("/profile/<username>", methods=["GET", "POST"])
@@ -101,7 +95,6 @@ def profile(username):
         # Save the image file to the path
         filepath = os.path.join(dir, new_filename)
         feature_image.save(filepath)
-
 
         post = Post(
             title = form.title.data,
@@ -153,7 +146,23 @@ def upload():
 def single_post(post_id):
     post = db.get_or_404(Post, post_id)
     return render_template("post.html", post=post)
-    
+
+
+@main.route("/subscribe", methods=["POST"])
+def subscribe():
+    form = SubscribeForm()
+
+    if form.validate_on_submit():
+        email = form.email.data
+        new_subs = Subscriber(email=email)
+        db.session.add(new_subs)
+        db.session.commit()
+        return jsonify({"success": "Subscription successful!"}), 200
+    else:
+        # Collect and return validation errors
+        errors = {field: errors for field, errors in form.errors.items()}
+        return jsonify({'status': 'error', 'errors': errors}), 400
+
 
 @main.route("/images/<filename>")
 def uploaded_image(filename):

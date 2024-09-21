@@ -1,0 +1,13 @@
+<div class="p-8 text-center border-4 border-slate-400">
+    <p class="uppercase">Sign Up For Our</p>
+    <p class="mb-10 text-4xl">Mailing List</p>
+    <form id="subscribe-form" novalidate>
+        {{ subscribe_form.hidden_tag() }}
+        {{ subscribe_form.email(
+            class="w-full px-3 py-1 ring-2 ring-slate-400 focus: outline-none focus:ring-2 focus:ring-slate-900",
+            placeholder="Email") }}
+        <button class="block w-full px-3 py-1 my-3 text-slate-100 bg-slate-900" type="submit">Sign Up</button>
+    </form>
+    <i class="text-xs" id="subscribe-form-message"></i>
+    <p>No spam, we promise!</p>
+</div>

@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed, FileSize, FileRequired
 from wtforms import StringField, PasswordField, EmailField, BooleanField, \
     TextAreaField, SelectField
 from wtforms.validators import DataRequired, EqualTo, Email, Length, ValidationError
-from app.models import db, User, Category
+from app.models import db, User, Subscriber
 from app import Config
 
 #-----SignupForm------#
@@ -57,5 +57,10 @@ class PostForm(FlaskForm):
 #-----End of PostForm-----#
 
 
-class MailingListForm(FlaskForm):
+class SubscribeForm(FlaskForm):
     email = EmailField("Email", validators=[DataRequired(), Email(check_deliverability=True)])
+
+    def validate_email(self, email):
+        subscriber = db.session.scalar(db.select(Subscriber).where(Subscriber.email == email.data))
+        if subscriber is not None:
+            raise ValidationError("This email address is already exist.")
