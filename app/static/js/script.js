@@ -25,7 +25,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
     }
     
     function selectImage(imageUrl) {
-        tinymce.activeEditor.execCommand('mceInsertContent', false, `<img src="${imageUrl}" alt="Selected Image"/>`);
+        //tinymce.activeEditor.execCommand('mceInsertContent', false, `<img src="${imageUrl}" alt="Selected Image"/>`);
         closeModal();
     }
     

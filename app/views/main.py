@@ -170,11 +170,11 @@ def uploaded_image(filename):
     return send_from_directory(Config.UPLOAD_FOLDER, filename)
 
 
-@main.route('/api/images', methods=['GET'])
+@main.route("/api/images", methods=["GET"])
 def get_images():
     images = []
     for filename in os.listdir(os.path.join(current_app.root_path, Config.UPLOAD_FOLDER)):
-        if filename.endswith(('.png', '.jpg', '.jpeg', '.webp')):
-            images.append({'url': url_for("main.uploaded_image", filename=filename)}) #f'/{Config.UPLOAD_FOLDER}/{filename}'}
+        if filename.endswith((".png", ".jpg", ".jpeg", ".webp")):
+            images.append({"url": url_for("main.uploaded_image", filename=filename)})
 
-    return jsonify({'images': images}), 200
+    return jsonify({"images": images}), 200
