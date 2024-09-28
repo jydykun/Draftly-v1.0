@@ -2,18 +2,18 @@
 
 {% block body %}
 <main>
-    <section class="h-64 border-b-4 border-slate-900 bg-slate-200 overflow-hidden">
+    <section class="h-64 mb-20 border-b-4 border-slate-900 bg-slate-200 overflow-hidden">
     </section>
 
 
     <div class="container max-w-screen-xl mx-auto px-8">
-        <div class="grid grid-cols-1">
-            <div class="col-span-8 mb-10 border">
+        <div class="grid grid-cols-1 md:grid-cols-12 md:gap-10">
+            <div class="col-span-8 mb-10">
                 <article>
                     <p class="my-3 uppercase">{{ post.c_posts.name}}</p>
-                    <h1 class="text-3xl">{{ post.title }}</h1>
-                    <p class="my-3"><i>By {{ post.u_posts.username }}</i></p>
-                    <section>
+                    <h1 class="mb-3 text-5xl font-bold">{{ post.title }}</h1>
+                    <p class="mb-10"><i>By {{ post.u_posts.username }}</i></p>
+                    <section id="single-post-format">
                         {{ post.body | safe }}
                     </section>
                 </article>

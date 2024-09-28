@@ -1,10 +1,6 @@
-person = {
-    "first" : "Joseph",
-    "last" : "Dugho",
-    "job" : "Web Developer"
-}
+names = "Joseph"
 
 
-test = {key: value for key, value in person.items()}
+test = [i for i in names]
 
 print(test)

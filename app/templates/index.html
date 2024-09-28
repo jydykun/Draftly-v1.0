@@ -24,10 +24,10 @@
                             <img src="{{ url_for('main.uploaded_image', filename=post.featured_image)}}" alt="">
                         </div>
                         <p class="my-3 uppercase">{{ post.c_posts.name }}</p>
-                        <h2 class="text-2xl">{{ post.title }}</h2>
+                        <h2 class="text-2xl font-bold">{{ post.title }}</h2>
                     </a>
                     <p class="my-3"><i>By {{ post.u_posts.username }}</i></p>
-                    {{ post.body_without_images | safe }}
+                    <p>{{ post.text_only[:150] | safe }} ...</p>
                 </article>
                 {% endfor %}
             </div>   

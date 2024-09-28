@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from app import Config
 from app.models import db, User, Post, Category, Subscriber
 from app.forms import PostForm, SubscribeForm
-from app.utils import remove_image_tag
+from app.utils import remove_image_tag, remove_html_tags
 
 
 ### MAIN BLUEPRINT STARTS HERE ###
@@ -44,7 +44,8 @@ def index():
 
     # Remove the image tag of the post in the homepage
     for post in posts:
-        post.body_without_images = remove_image_tag(post.body)
+        #post.body_without_images = remove_image_tag(post.body)
+        post.text_only = remove_html_tags(post.body)
 
     return render_template("index.html", posts=posts, title=f"{title} - Homepage")
 
@@ -167,3 +168,13 @@ def subscribe():
 @main.route("/images/<filename>")
 def uploaded_image(filename):
     return send_from_directory(Config.UPLOAD_FOLDER, filename)
+
+
+@main.route('/api/images', methods=['GET'])
+def get_images():
+    images = []
+    for filename in os.listdir(os.path.join(current_app.root_path, Config.UPLOAD_FOLDER)):
+        if filename.endswith(('.png', '.jpg', '.jpeg', '.webp')):
+            images.append({'url': url_for("main.uploaded_image", filename=filename)}) #f'/{Config.UPLOAD_FOLDER}/{filename}'}
+
+    return jsonify({'images': images}), 200

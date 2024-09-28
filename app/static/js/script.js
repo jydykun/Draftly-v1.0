@@ -1,14 +1,45 @@
 window.addEventListener("DOMContentLoaded", ()=>{
+    function openImageModal(callback) {
+        document.getElementById('imageModal').style.display = 'block';
+        fetchImages(callback); // Fetch images from your server
+    }
+    
+    function closeModal() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+    
+    function fetchImages(callback) {
+        fetch('/api/images') // Replace with your endpoint
+            .then(response => response.json())
+            .then(data => {
+                const gallery = document.getElementById('image-gallery');
+                gallery.innerHTML = ''; // Clear previous images
+                data.images.forEach(image => {
+                    const img = document.createElement('img');
+                    img.src = image.url; // Assuming the image object has a URL property
+                    img.onclick = () => selectImage(image.url);
+                    gallery.appendChild(img);
+                    callback(img.src);
+                });
+            });
+    }
+    
+    function selectImage(imageUrl) {
+        tinymce.activeEditor.execCommand('mceInsertContent', false, `<img src="${imageUrl}" alt="Selected Image"/>`);
+        closeModal();
+    }
     
     // TinyMCE Initialization
     tinymce.init({
         selector: "#tinymce_editor",
         license_key: "gpl",
-        plugins: "image save visualblocks preview help link autolink",
-        toolbar: "undo redo image cancel preview help link | align fontfamily styles",
+        plugins: "image save visualblocks code pagebreak nonbreaking preview",
+        toolbar: "undo redo image visualblocks code pagebreak nonbreaking preview",
         images_upload_url: "/upload",
-        link_assume_external_targets: true,
-        link_context_toolbar: true
+        file_picker_callback: function (callback) {
+            openImageModal(callback); // Call the modal open function
+        },
+        visualblocks_default_state: true
     });
 
 
