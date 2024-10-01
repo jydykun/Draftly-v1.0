@@ -27,6 +27,23 @@
         </div>
     </div>
 
+    <div id="modal" class="fixed left-0 top-0 w-full h-full z-[9999] bg-slate-300/75 hidden">
+        <div class="flex items-center h-full">
+            <div class="modal-content container mx-auto p-10 bg-slate-100 shadow-md">
+                <div class="flex justify-between mb-5 border border-red-900">
+                    <p>Add Image</p>
+                    <button class="border border-red-900">x</button>
+                </div>
+                <div id="modal-gallery" class="grid grid-cols-5 h-96 gap-4 overflow-y-auto">
+                    <div id="image-container" class="h-40 flex items-center overflow-hidden border border-red-900">
+    
+                    </div>
+                    <!--https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-1170x780.jpg-->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <p><img id="preview-image" src="" alt=""></p>
 
     {{ form.errors }}

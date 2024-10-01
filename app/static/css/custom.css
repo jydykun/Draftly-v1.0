@@ -102,8 +102,9 @@ for this wonderful menu animation
   list-style-type: disc;
 }
 
+/*
 .modal {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed; 
   z-index: 9999; 
   left: 0; 
@@ -124,7 +125,11 @@ for this wonderful menu animation
 }
 
 .image-gallery img {
-  width: 100px; /* Thumbnail size */
+  width: 100px;
   margin: 10px;
+  cursor: pointer;
+}*/
+
+#modal-gallery img {
   cursor: pointer;
 }

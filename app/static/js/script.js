@@ -1,31 +1,37 @@
 window.addEventListener("DOMContentLoaded", ()=>{
     function openImageModal(callback) {
-        document.getElementById('imageModal').style.display = 'block';
+        document.querySelector("#modal").style.display = "block";
         fetchImages(callback); // Fetch images from your server
     }
     
     function closeModal() {
-        document.getElementById('imageModal').style.display = 'none';
+        document.querySelector("#modal").style.display = 'none';
     }
     
     function fetchImages(callback) {
         fetch('/api/images') // Replace with your endpoint
             .then(response => response.json())
             .then(data => {
-                const gallery = document.getElementById('image-gallery');
-                gallery.innerHTML = ''; // Clear previous images
+                const gallery = document.querySelector("#modal-gallery");
+                gallery.innerHTML = ""; // Clear previous images
                 data.images.forEach(image => {
-                    const img = document.createElement('img');
+                    const imgContainer = document.createElement("div");
+                    imgContainer.className = "h-40 flex items-center overflow-hidden";
+
+                    const img = document.createElement("img");
+                    img.className = "w-full h-full object-cover";
                     img.src = image.url; // Assuming the image object has a URL property
-                    img.onclick = () => selectImage(image.url);
-                    gallery.appendChild(img);
-                    callback(img.src);
+                    img.onclick = () => selectImage(img.src, callback);
+                    imgContainer.appendChild(img);
+                    gallery.appendChild(imgContainer);
                 });
             });
     }
     
-    function selectImage(imageUrl) {
+    function selectImage(imageUrl, callback) {
         //tinymce.activeEditor.execCommand('mceInsertContent', false, `<img src="${imageUrl}" alt="Selected Image"/>`);
+        console.log(imageUrl)
+        callback(imageUrl)
         closeModal();
     }
     
