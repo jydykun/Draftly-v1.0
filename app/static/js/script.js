@@ -5,11 +5,20 @@ window.addEventListener("DOMContentLoaded", ()=>{
     }
     
     function closeModal() {
-        document.querySelector("#modal").style.display = 'none';
+        document.querySelector("#modal").style.display = "none";
+    }
+
+    const closeButton = document.querySelector("#close-modal");
+
+    if(closeButton){
+        closeButton.addEventListener("click", (e)=>{
+            e.stopPropagation();
+            closeModal();
+        })
     }
     
     function fetchImages(callback) {
-        fetch('/api/images') // Replace with your endpoint
+        fetch("/api/images") // Replace with your endpoint
             .then(response => response.json())
             .then(data => {
                 const gallery = document.querySelector("#modal-gallery");
@@ -85,34 +94,36 @@ window.addEventListener("DOMContentLoaded", ()=>{
     const subsForm = document.querySelector("#subscribe-form");
     const message = document.querySelector("#subscribe-form-message");
 
-    subsForm.addEventListener("submit", (e)=>{
-        e.preventDefault()
-
-        formData = new FormData(subsForm)
-
-        fetch("/subscribe", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => {
-            if(!response.ok){
-                return response.json()
-                .then(result => {
-                    message.textContent = result.errors.email[0]
-                })
-            }
-            else {
-                return response.json()
-                .then(result => {
-                    message.textContent = result.success
-                })
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-    });
+    if (subsForm) {
+        subsForm.addEventListener("submit", (e)=>{
+            e.preventDefault()
+    
+            formData = new FormData(subsForm)
+    
+            fetch("/subscribe", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                if(!response.ok){
+                    return response.json()
+                    .then(result => {
+                        message.textContent = result.errors.email[0]
+                    })
+                }
+                else {
+                    return response.json()
+                    .then(result => {
+                        message.textContent = result.success
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    
+        });
+    }
 
 });
 

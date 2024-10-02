@@ -146,7 +146,8 @@ def upload():
 @main.route("/post/<int:post_id>")
 def single_post(post_id):
     post = db.get_or_404(Post, post_id)
-    return render_template("post.html", post=post)
+    posts = db.session.scalars(db.select(Post).order_by(Post.timestamp.desc()).limit(4)).all()
+    return render_template("post.html", post=post, posts=posts)
 
 
 @main.route("/subscribe", methods=["POST"])

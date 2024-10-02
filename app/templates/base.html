@@ -8,7 +8,7 @@
     <script src="{{ url_for('static', filename='js/tinymce_7.3.0/tinymce.min.js') }}" referrerpolicy="origin"></script>
     <title>{{ title }}</title>
 </head>
-<body>
+<body class="text-slate-900">
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
