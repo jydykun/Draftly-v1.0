@@ -6,5 +6,5 @@
 .navbar-link {
     @apply inline-block w-full p-3 rounded-md transition-all duration-200
     hover:pl-6 hover:font-bold hover:bg-slate-800
-    md:hover:pl-3 md:hover:bg-inherit md:hover:font-normal md:hover:text-slate-800
+    md:hover:pl-3 md:hover:bg-inherit md:hover:font-normal md:hover:text-slate-400
 }

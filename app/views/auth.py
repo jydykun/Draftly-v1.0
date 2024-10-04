@@ -41,14 +41,14 @@ def login():
         if user and user.check_password(form.password.data):
             remember = form.remember_me.data
             login_user(user, remember=remember)
-            flash("Logged in successfully.")
+            flash("Login Successful!", "success")
             next = request.args.get("next")
             if next:
                 return redirect(next)
             else:
                 return redirect(url_for("main.profile", username=current_user.username))
         else:
-            flash("Invalid credentials.")
+            flash("Incorrect username or password.", "error")
     return render_template("login.html", form=form, title=f"{title} - Log In")
 
 

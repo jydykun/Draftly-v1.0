@@ -1,11 +1,23 @@
-<footer class="text-slate-100 bg-slate-900">
-    <div class="container max-w-screen-xl mx-auto px-8 py-10">
-        <h2>theblog</h2>
-        <p><a href="#">&copy 2024</a></p>
-        <ul>
-        {% for category in categories %}
-            <li class="text-white"><a href="{{ url_for('main.category_page', category_key=category.key) }}">{{category.name}}</a></li>
-        {% endfor %}
-        </ul>
+<footer class="py-10 text-slate-100 bg-slate-900">
+    <div class="container mx-auto px-8">
+        <div class="flex">
+            <div class="mr-14">
+                <a href="{{ url_for('main.index') }}">
+                    <h2 class="py-2 font-extrabold">THE CODING JOURNAL</h2>
+                </a>
+                <p>&copy 2024</p>
+            </div>
+            <ul class="mr-14">
+                <li class="py-2 text-white hover:text-slate-400 transition-all"><a href="{{ url_for('main.index') }}">Home</a></li>
+                <li class="py-2 text-white hover:text-slate-400 transition-all"><a href="#">About</a></li>
+            </ul>
+            <ul>
+            {% for category in categories %}
+                <li class="py-2 text-white hover:text-slate-400 transition-all">
+                    <a href="{{ url_for('main.category_page', category_key=category.key) }}">{{category.name}}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
 </footer>

@@ -18,6 +18,9 @@ title = Config.APP_NAME
 
 main = Blueprint("main", __name__)
 
+
+
+
 # A context processor runs before each request, injecting variables into the template context for all routes.
 # You can define a context processor that retrieves categories and makes them available in every template.
 @main.context_processor
@@ -29,7 +32,7 @@ def inject():
 
     return {
         "categories": categories,
-        "subscribe_form": subscribe_form
+        "subscribe_form": subscribe_form,
         }
 
 
@@ -53,8 +56,15 @@ def index():
 @main.route("/<category_key>")
 def category_page(category_key):
     category = db.first_or_404(db.select(Category).where(Category.key == category_key))
+    #posts = db.session.scalars(db.select(Post).where(Post.category_id == category.id)).all()
+    posts = db.paginate(db.select(Post).where(Post.category_id == category.id).order_by(Post.timestamp.desc()), per_page=2, error_out=False)
 
-    return render_template("category_page.html", category=category)
+    # Remove the image tag of the post in the homepage
+    for post in posts:
+        #post.body_without_images = remove_image_tag(post.body)
+        post.text_only = remove_html_tags(post.body)
+
+    return render_template("category_page.html", category=category, posts=posts)
 
 
 @main.route("/profile/<username>", methods=["GET", "POST"])
@@ -140,7 +150,20 @@ def upload():
     # Get the URL of the uploaded image
     image_url = url_for("main.uploaded_image", filename=filename)
 
-    return jsonify({ "location": image_url })
+    return jsonify({ "location": image_url }), 200
+
+
+@main.route("/articles")
+def articles():
+    # Paginate posts
+    posts = db.paginate(db.select(Post).order_by(Post.timestamp.desc()), per_page=9, error_out=False)
+
+    # Remove the image tag of the post in the homepage
+    for post in posts:
+        #post.body_without_images = remove_image_tag(post.body)
+        post.text_only = remove_html_tags(post.body)
+
+    return render_template("articles.html", posts=posts)
 
 
 @main.route("/post/<int:post_id>")

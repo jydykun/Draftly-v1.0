@@ -2,68 +2,68 @@
 
 {% block body %}
 
-<main>
-    <section class="bg-slate-800 overflow-hidden">
-        <div class="container mx-auto px-8">
-            <div class="py-40 text-center text-slate-100">
-                <h1 class="mb-5 text-6xl font-bold">The Coding Journal</h1>
-                <p class="text-lg"><i>Deep Dives into the World of Software Development</i></p>
-            </div>
+
+<section class="bg-slate-800 overflow-hidden">
+    <div class="container mx-auto px-8">
+        <div class="py-40 text-center text-slate-100">
+            <h1 class="mb-5 text-6xl font-bold">The Coding Journal</h1>
+            <p class="text-lg"><i>Deep Dives into the World of Software Development</i></p>
         </div>
-    </section>
-
-
-    <div class="container mx-auto mb-20 px-8">
-        <p class="py-10 text-2xl">Latest Articles</p>
-        <div class="grid grid-cols-1 md:grid-cols-12 md:gap-10">
-            <div class="col-span-8 grid grid-cols-1 mb-10 md:grid-cols-2 md:gap-10">
-                {% for post in posts %}
-                <article class="mb-10">
-                    <a href="{{ url_for('main.single_post', post_id=post.id) }}">
-                        <div class="border-b-4 border-slate-900 max-h-60 overflow-hidden">
-                            <img src="{{ url_for('main.uploaded_image', filename=post.featured_image)}}" alt="">
-                        </div>
-                        <p class="my-3 uppercase">{{ post.c_posts.name }}</p>
-                        <h2 class="text-2xl font-bold">{{ post.title }}</h2>
-                    </a>
-                    <p class="my-3"><i>By {{ post.u_posts.username }}</i></p>
-                    <p>{{ post.text_only[:150] | safe }} ...</p>
-                </article>
-                {% endfor %}
-            </div>   
-            
-            <!-----Sidebar----->
-            <aside class="col-span-4 md:pl-10 md:border-l-2 md:border-slate-200">
-                {% include "subscribe.html" %}
-            </aside>
-        </div>  
-
-        {#
-        <div>
-            {% if posts.has_prev %}
-            <a href="{{ url_for('main.index', page=posts.prev_num) }}">Prev</a>
-            {% endif %}
-
-            {% for page in posts.iter_pages() %}
-                {% if page %}
-                    {% if page != posts.page %}
-                        <a href="{{ url_for('main.index', page=page) }}">{{ page }}</a>
-                    {% else %}
-                        <strong>{{ page }}</strong>
-                    {% endif %}
-                {% else %}
-                    <span class=ellipsis>…</span>
-                {% endif %}
-            {% endfor %}
-
-            {% if posts.has_next %}
-                <a href="{{ url_for('main.index', page=posts.next_num) }}">Next</a>
-            {% endif %}
-        </div>#}
-
-
     </div>
+</section>
 
-</main>
+
+<div class="container mx-auto mb-20 px-8">
+    <p class="py-10 text-2xl">Latest Articles</p>
+    <div class="grid grid-cols-1 md:grid-cols-12 md:gap-10">
+        <div class="col-span-8 grid grid-cols-1 mb-10 md:grid-cols-2 md:gap-10">
+            {% for post in posts %}
+            <article class="mb-10">
+                <a href="{{ url_for('main.single_post', post_id=post.id) }}">
+                    <div class="border-b-4 border-slate-900 max-h-60 overflow-hidden">
+                        <img class="hover:scale-[1.1] transition-all" src="{{ url_for('main.uploaded_image', filename=post.featured_image)}}">
+                    </div>
+                    <p class="my-3 uppercase">{{ post.c_posts.name }}</p>
+                    <h2 class="text-2xl font-bold">{{ post.title }}</h2>
+                </a>
+                <p class="my-3"><i>By {{ post.u_posts.username }}</i></p>
+                <p>{{ post.text_only[:150] | safe }} ...</p>
+            </article>
+            {% endfor %}
+        </div>   
+        
+        <!-----Sidebar----->
+        <aside class="col-span-4 md:pl-10 md:border-l-2 md:border-slate-200">
+            {% include "subscribe.html" %}
+        </aside>
+    </div>  
+
+    {#
+    <div>
+        {% if posts.has_prev %}
+        <a href="{{ url_for('main.index', page=posts.prev_num) }}">Prev</a>
+        {% endif %}
+
+        {% for page in posts.iter_pages() %}
+            {% if page %}
+                {% if page != posts.page %}
+                    <a href="{{ url_for('main.index', page=page) }}">{{ page }}</a>
+                {% else %}
+                    <strong>{{ page }}</strong>
+                {% endif %}
+            {% else %}
+                <span class=ellipsis>…</span>
+            {% endif %}
+        {% endfor %}
+
+        {% if posts.has_next %}
+            <a href="{{ url_for('main.index', page=posts.next_num) }}">Next</a>
+        {% endif %}
+    </div>#}
+
+
+</div>
+
+
 
 {% endblock %}

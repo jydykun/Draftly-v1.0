@@ -5,13 +5,13 @@
 <section class="mb-20 border-b-4 border-slate-900 bg-slate-200 overflow-hidden">
     <div class="container mx-auto px-8">
         <div class="flex items-center h-44">
-            <h1 class="text-3xl font-bold">{{ category.name }}</h1>
+            <h1 class="text-3xl font-bold">All Articles</h1>
         </div>
     </div>
 </section>
 
 <div class="container mx-auto px-8">
-    <div class="col-span-8 grid grid-cols-1 mb-10 md:grid-cols-3 md:gap-10">
+    <div class="col-span-8 grid grid-cols-1 md:grid-cols-3 md:gap-10">
         {% for post in posts %}
         <article class="mb-10">
             <a href="{{ url_for('main.single_post', post_id=post.id) }}">
@@ -30,13 +30,13 @@
     <!--PAGINATION-->
     <ul class="flex justify-center mb-10">
         {% if posts.has_prev %}
-        <li><a class="inline-block px-3 py-2 border-2 border-slate-400 rounded-l-md hover:bg-slate-400 transition-all" href="{{ url_for('main.category_page', category_key=category.key, page=posts.prev_num) }}">Prev</a></li>
+        <li><a class="inline-block px-3 py-2 border-2 border-slate-400 rounded-l-md hover:bg-slate-400 transition-all" href="{{ url_for('main.articles', page=posts.prev_num) }}">Prev</a></li>
         {% endif %}
 
         {% for page in posts.iter_pages() %}
             {% if page %}
                 {% if page != posts.page %}
-                    <li><a class="inline-block px-3 py-2 border-y-2 border-slate-400 hover:bg-slate-400 transition-all" href="{{ url_for('main.category_page', category_key=category.key, page=page) }}">{{ page }}</a></li>
+                    <li><a class="inline-block px-3 py-2 border-y-2 border-slate-400 hover:bg-slate-400 transition-all" href="{{ url_for('main.articles', page=page) }}">{{ page }}</a></li>
                 {% else %}
                     <strong class=
                         "{% if loop.first %}
@@ -54,11 +54,10 @@
         {% endfor %}
 
         {% if posts.has_next %}
-            <li><a class="inline-block px-3 py-2 border-2 border-slate-400 rounded-r-md hover:bg-slate-400 transition-all" href="{{ url_for('main.category_page', category_key=category.key, page=posts.next_num) }}">Next</a></li>
+            <li><a class="inline-block px-3 py-2 border-2 border-slate-400 rounded-r-md hover:bg-slate-400 transition-all" href="{{ url_for('main.articles', page=posts.next_num) }}">Next</a></li>
         {% endif %}
     </ul>
 
 </div>
-
-
+    
 {% endblock %}

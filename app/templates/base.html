@@ -10,26 +10,41 @@
 </head>
 <body class="text-slate-900">
 
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            <ul class="flashes">
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
+            {% for category, message in messages %}
+            <div id="flashes" class="rounded border-2 {{ category }} border-green-900 bg-green-200 text-green-900">
+                <p class="px-5 py-2">{{ message }}</p>
+            </div>
+            {% endfor %}
         {% endif %}
     {% endwith %}
 
-    {% include "header.html" %}
-
+    {% block header %}
+        {% include "header.html" %}
+    {% endblock %}
+    
+    <main>
     {% block body %}
         <!--Body Block-->
     {% endblock %}
+    </main>
 
-    {% include "footer.html" %}
+    {% block footer %}
+        {% include "footer.html" %}
+    {% endblock %}
 
 
     <script src="{{ url_for('static', filename='js/script.js' )}}"></script>
+    <script>
+        window.addEventListener("load", () => {
+            const flashMessage = document.querySelector("#flashes");
+            flashMessage.classList.add("show");
+            setTimeout(() => {
+                flashMessage.classList.remove("show");
+            }, 2000); // 2 seconds
+        })
+    </script>
     
 </body>
 </html>

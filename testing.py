@@ -1,6 +1,12 @@
-names = "Joseph"
+import os
+import shutil
 
 
-test = [i for i in names]
 
-print(test)
+print(os.getcwd())
+
+os.chdir(os.pardir)
+
+print(os.getcwd())
+
+os.mkdir("testing")

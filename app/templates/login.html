@@ -1,13 +1,35 @@
 {% extends "base.html" %}
 
-{% block body %}
-    <h1>Login page</h1>
+{% block header %}
+  {# LEAVE THIS BLANK #}
+{% endblock %}
 
-    <form action="{{ url_for('auth.login') }}" method="POST" novalidate>
-        {{ form.hidden_tag() }}
-        {{ form.username.label }} {{ form.username }} {{ form.username.errors[0] }}
-        {{ form.password.label }} {{ form.password }} {{ form.password.errors[0] }}
-        {{ form.remember_me }} {{ form.remember_me.label}}
-        <button type="submit">Submit</button>
-      </form>
+{% block body %}
+<div class="flex flex-col justify-center items-center w-full h-screen bg-gradient-to-t from-slate-900 to-slate-800">
+    <p class="my-5 font-extrabold text-2xl text-slate-100">THE CODING JOURNAL</p>
+    <div class="w-96 bg-slate-100 rounded-md shadow-md shadow-slate-900">
+      <div class="flex flex-col p-10">
+        <p class="mb-3 text-center text-2xl font-bold">LOGIN</p>
+        <form action="{{ url_for('auth.login') }}" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            {{ form.username(class="w-full my-4 p-2 ring-1 ring-slate-400 rounded-md", placeholder="Username") }}
+            <span class="block text-xs -mt-1 text-red-900">{{ form.username.errors[0] }}</span>
+            {{ form.password(class="w-full my-4 p-2 ring-1 ring-slate-400 rounded-md", placeholder="Password") }}
+            <span class="block text-xs -mt-1 text-red-900">{{ form.password.errors[0] }}</span>
+            <div class="flex justify-between mb-3">
+              <span>{{ form.remember_me }} {{ form.remember_me.label}}</span>
+              <span><a href="#">Forgot Password?</a></span>
+            </div>
+            <button class="w-full p-2 bg-slate-900 rounded-md text-slate-50" type="submit">Submit</button>
+        </form>
+        <span class="inline-block mt-3 text-center">
+          Don't have an account? <a class="font-bold" href="{{ url_for('auth.signup' )}}">Sign Up</a>
+        </span>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+  {# LEAVE THIS BLANK #}
 {% endblock %}
