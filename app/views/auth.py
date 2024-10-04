@@ -24,7 +24,7 @@ def signup():
         # The flash message can only be seen after the request.
         # Therefore, include the get_flashed_messages() function on
         # the redirected page.
-        flash("Registered Successfully", "success")
+        flash("You are now registered!", "success")
         return redirect(url_for("auth.login"))
     
     return render_template("signup.html", form=form, title=f"{title} - Sign Up")

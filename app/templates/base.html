@@ -13,7 +13,7 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-            <div id="flashes" class="rounded border-2 {{ category }} border-green-900 bg-green-200 text-green-900">
+            <div id="flashes" class="rounded border-2 {{ category }} border-green-700 bg-green-200 text-green-700">
                 <p class="px-5 py-2">{{ message }}</p>
             </div>
             {% endfor %}

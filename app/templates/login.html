@@ -20,7 +20,7 @@
               <span>{{ form.remember_me }} {{ form.remember_me.label}}</span>
               <span><a href="#">Forgot Password?</a></span>
             </div>
-            <button class="w-full p-2 bg-slate-900 rounded-md text-slate-50" type="submit">Submit</button>
+            <button class="w-full p-2 bg-slate-900 rounded-md text-slate-50 hover:bg-slate-400 transition-all" type="submit">Submit</button>
         </form>
         <span class="inline-block mt-3 text-center">
           Don't have an account? <a class="font-bold" href="{{ url_for('auth.signup' )}}">Sign Up</a>

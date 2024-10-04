@@ -1,31 +1,35 @@
 {% extends "base.html" %}
 
-{% block body %}
-    <h1>Dashboard Page</h1>
-    <h1>{{ current_user.username }}</h1>
-    <p>All Posts</p>
-    <p>Add New Post</p>
-    <a href="{{ url_for('main.index')}}">Home</a>
-    <a href="#">Settings</a>
-    <a href="{{ url_for('auth.logout')}}">Logout</a>
-    
-    <form action="{{ url_for('main.profile', username=current_user.username) }}" method="POST" enctype="multipart/form-data" novalidate>
-        {{ form.hidden_tag() }}
-        {{ form.title }}
-        {{ form.body(id="tinymce_editor") }}
-        {{ form.category.label }}{{ form.category }}
-        {{ form.feature_image.label }}{{ form.feature_image }}
-        <button type="submit">Save</button>
-    </form>
+{% block header %}
+  {# LEAVE THIS BLANK #}
+{% endblock %}
 
-    <div id="imageModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
-            <div id="image-gallery" class="image-gallery">
-                <!-- Dynamically populated images will go here -->
-            </div>
+{% block body %}
+<div class="grid grid-cols-12">
+    <div class="col-span-2 h-screen p-5 border border-red-900">
+        <p class="font-extrabold">THE CODING JOURNAL</p>
+        <ul class="border">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Posts</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="{{ url_for('main.index')}}">Visit Site</a></li>
+            <li><a href="{{ url_for('auth.logout')}}">Logout</a></li>
+        </ul>
+    </div>
+    <div class="col-span-10 border border-red-900">
+        <div class="hidden">
+            <form action="{{ url_for('main.profile', username=current_user.username) }}" method="POST" enctype="multipart/form-data" novalidate>
+                {{ form.hidden_tag() }}
+                {{ form.title }}
+                {{ form.body(id="tinymce_editor") }}
+                {{ form.category.label }}{{ form.category }}
+                {{ form.feature_image.label }}{{ form.feature_image }}
+                <button type="submit">Save</button>
+            </form>
         </div>
     </div>
+</div>
+    
 
     <div id="modal" class="fixed left-0 top-0 w-full h-full z-[9999] bg-slate-300/75 hidden">
         <div class="flex items-center h-full">
@@ -49,6 +53,8 @@
     </div>
 
     <p><img id="preview-image" src="" alt=""></p>
+{% endblock %}
 
-    {{ form.errors }}
+{% block footer %}
+  {# LEAVE THIS BLANK #}
 {% endblock %}
