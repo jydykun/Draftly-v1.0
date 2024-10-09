@@ -2,12 +2,10 @@ from app import create_app
 from app.models import db, Category
 import click
 import subprocess
-import os
 
 app = create_app()
 
-
-#Command Line Interface for theblog web application
+# Command Line Interface for theblog web application
 @click.group()
 def cli():
     pass
@@ -35,7 +33,6 @@ def add_category(key, name):
         db.session.add(category)
         db.session.commit()
         click.echo(f"Category '{key}:{name}' added successfully.")
-
 
 # Run Tailwind in watch mode
 @cli.command()

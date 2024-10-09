@@ -44,10 +44,12 @@
     <script>
         window.addEventListener("load", () => {
             const flashMessage = document.querySelector("#flashes");
-            flashMessage.classList.add("show");
-            setTimeout(() => {
-                flashMessage.classList.remove("show");
-            }, 2000); // 2 seconds
+            if(flashMessage){
+                flashMessage.classList.add("show");
+                setTimeout(() => {
+                    flashMessage.classList.remove("show");
+                }, 2000); // 2 seconds
+            }
         })
     </script>
     

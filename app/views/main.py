@@ -5,7 +5,6 @@ from flask import Blueprint, render_template, request, \
     send_from_directory
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
-from sqlalchemy.orm import joinedload
 from app import Config
 from app.models import db, User, Post, Category, Subscriber
 from app.forms import PostForm, SubscribeForm, EditPostForm
@@ -38,6 +37,7 @@ def inject():
 
 
 # Homepage ----------------------------------------------------------
+
 @main.route("/", methods=["GET", "POST"])
 def index():
 
@@ -237,12 +237,11 @@ def edit_post(post_id):
     categories = db.session.scalars(db.select(Category)).all()
     category = post.category_id
     
-    form = EditPostForm(obj=post)
+    form = EditPostForm(obj=post) #Populate the form with the existing data
 
     category_choices = [(category.id, category.name) for category in categories]
     form.category.choices = category_choices
     
-
     # Validate the form
     if form.validate_on_submit():
         post.title = form.title.data
@@ -250,12 +249,13 @@ def edit_post(post_id):
         post.category_id = form.category.data
         new_feature_image = request.form.get("replace_image_picker")
 
+        #Check if there's an updated file for featured image
         if new_feature_image:
             post.featured_image = new_feature_image
         
         db.session.commit()
 
-        flash(f"Updated Successfully{post.featured_image}", "success")
+        flash(f"Updated Successfully", "success")
         return redirect(url_for("main.profile", username=current_user.username))
 
     return render_template("edit_post.html", title=f"{title} - Edit Post", categories=categories, form=form, category=category, post=post)

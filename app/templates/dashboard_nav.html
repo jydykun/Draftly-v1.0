@@ -1,9 +1,9 @@
-<nav>
-    <a class="font-extrabold" href="{{ url_for('main.index')}}">THE CODING JOURNAL</p>
-    <ul class="border">
-        <li><a href="{{ url_for('main.profile', username=current_user.username)}}">Dashboard</a></li>
-        <li class="nav"><a href="#">Posts</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="{{ url_for('auth.logout')}}">Logout</a></li>
+<nav class="col-span-2 h-screen p-6 bg-gray-900 text-gray-50 border border-red-900">
+    <a class="block py-3 font-extrabold" href="{{ url_for('main.index')}}">THE CODING JOURNAL</a>
+    <ul>
+        <li class="pl-2 py-3 border-b-2 border-gray-800 transition-all hover:text-slate-400"><a href="{{ url_for('main.profile', username=current_user.username)}}">Dashboard</a></li>
+        <li class="pl-2 py-3 border-b-2 border-gray-800 transition-all hover:text-slate-400"><a href="#">Posts</a></li>
+        <li class="pl-2 py-3 border-b-2 border-gray-800 transition-all hover:text-slate-400"><a href="#">Settings</a></li>
+        <li class="pl-2 py-3 transition-all hover:text-slate-400"><a href="{{ url_for('auth.logout')}}">Logout</a></li>
     </ul>
 </nav>

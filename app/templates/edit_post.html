@@ -6,9 +6,9 @@
 
 {% block body %}
 <div class="grid grid-cols-12">
-    <div class="col-span-2 h-screen p-5 border border-red-900">
-        {% include "dashboard_nav.html" %}
-    </div>
+    
+    {% include "dashboard_nav.html" %}
+
     <div class="col-span-10 border border-red-900">
         <main class="m-5 border border-red-900">
             <p class="text-xl">Edit Post</p>
@@ -34,7 +34,7 @@
                 </form>
 
                 <button id="trigger-modal">Replace Image</button>
-                <img id="preview" class="size-10" src="{{ url_for('main.uploaded_image', filename=post.featured_image)}}">
+                <img id="image-preview" class="size-10" src="{{ url_for('main.uploaded_image', filename=post.featured_image)}}">
                 {{ form.errors  }}
 
                 <div id="modal" class="fixed left-0 top-0 w-full h-full z-[9999] bg-slate-300/75 hidden">
@@ -95,74 +95,5 @@
 {% endblock %}
 
 {% block script %}
-<script>
-    const triggerBtn = document.querySelector("#trigger-modal");
-    triggerBtn.addEventListener("click", openImageModal)
-
-    function openImageModal() {
-            document.querySelector("#modal").style.display = "block";
-            fetchImages(); // Fetch images from your server
-    }
-    
-    function closeModal() {
-        document.querySelector("#modal").style.display = "none";
-    }
-
-    const closeButton = document.querySelector("#close-modal");
-
-    if(closeButton){
-        closeButton.addEventListener("click", (e)=>{
-            e.stopPropagation();
-            closeModal();
-        })
-    }
-        
-    async function fetchImages() {
-        try {
-            const response = await fetch("{{ url_for('main.get_images')}}", {
-                method: "GET",
-                headers: {
-                    "Content-Type" : "application/json"
-                }
-            });
-            if (response.ok){
-                const data = await response.json();
-
-                const gallery = document.querySelector("#modal-gallery");
-                gallery.innerHTML = ""; // Clear previous images
-                data.images.forEach(image => {
-                    const imgContainer = document.createElement("div");
-                    imgContainer.className = "h-40 flex items-center overflow-hidden";
-
-                    const img = document.createElement("img");
-                    img.className = "w-full h-full object-cover";
-                    img.src = image.url; // Assuming the image object has a URL property
-
-                    const fileInput = document.querySelector("#replace_image_picker");
-
-                    img.addEventListener("click", ()=>{
-                        const filename = image.url.split('/').pop();
-                        fileInput.value = filename; // Set the hidden input value with the filename
-                        const previewFilename = document.querySelector("#image-filename");
-                        const preview = document.querySelector("#preview");
-                        preview.src = "" // Clear the previous URL
-                        previewFilename.textContent = fileInput.value;
-                        const text = previewFilename.textContent
-                        preview.src = "{{ url_for('main.uploaded_image', filename=text) }}".concat(text)
-                        console.log(previewFilename)
-                        console.log(fileInput)
-                        console.log(preview.src)
-
-                        closeModal();
-                    })
-                    imgContainer.appendChild(img);
-                    gallery.appendChild(imgContainer);
-                })
-                
-            }
-        } catch (error) {
-            console.log({"Error": error})
-        }
-    }
-</script>
+<script src="{{ url_for('static', filename='js/fetch-data.js')}}"></script>
 {% endblock %}

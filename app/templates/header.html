@@ -20,8 +20,9 @@
             <!--Collapsible Menu-->
             <ul class="mb-5 hidden md:flex md:mb-0 md:items-center" id="collapse">
             {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('main.profile', username=current_user.username) }}">Profile</a></li>
-                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% for category in categories %}
+                    <li class="{% if loop.last %}pb-2{% endif %} md:pb-0"><a class="navbar-link" href="{{ url_for('main.category_page', category_key=category.key) }}">{{category.name}}</a></li>
+                {% endfor %}
             {% else %}
                 {% for category in categories %}
                     <li class="{% if loop.last %}pb-2{% endif %} md:pb-0"><a class="navbar-link" href="{{ url_for('main.category_page', category_key=category.key) }}">{{category.name}}</a></li>

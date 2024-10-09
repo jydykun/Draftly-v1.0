@@ -1,4 +1,13 @@
 window.addEventListener("DOMContentLoaded", ()=>{
+
+    const closeButton = document.querySelector("#close-modal");
+
+    // Check elements first before adding event listeners
+    // to avoid Uncaught TypeError
+    if(closeButton){
+        closeButton.addEventListener("click", closeModal)
+    }
+
     function openImageModal(callback) {
         document.querySelector("#modal").style.display = "block";
         fetchImages(callback); // Fetch images from your server
@@ -8,17 +17,13 @@ window.addEventListener("DOMContentLoaded", ()=>{
         document.querySelector("#modal").style.display = "none";
     }
 
-    const closeButton = document.querySelector("#close-modal");
-
-    if(closeButton){
-        closeButton.addEventListener("click", (e)=>{
-            e.stopPropagation();
-            closeModal();
-        })
+    function selectImage(imageUrl, callback) {
+        callback(imageUrl)
+        closeModal();
     }
     
     function fetchImages(callback) {
-        fetch("/api/images") // Replace with your endpoint
+        fetch("/api/images")
             .then(response => response.json())
             .then(data => {
                 const gallery = document.querySelector("#modal-gallery");
@@ -35,13 +40,6 @@ window.addEventListener("DOMContentLoaded", ()=>{
                     gallery.appendChild(imgContainer);
                 });
             });
-    }
-    
-    function selectImage(imageUrl, callback) {
-        //tinymce.activeEditor.execCommand('mceInsertContent', false, `<img src="${imageUrl}" alt="Selected Image"/>`);
-        console.log(imageUrl)
-        callback(imageUrl)
-        closeModal();
     }
     
     // TinyMCE Initialization
