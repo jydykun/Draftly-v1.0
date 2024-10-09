@@ -1,46 +1,12 @@
-{% extends "base.html" %}
-
-{% block body %}
-
-    <main>
-        <form id="testForm" action="{{ url_for('test.index')}}" novalidate>
-            {{form.email.label}} {{ form.email }}
-            <button id="testBtn" type="submit">Subscribe</button>
-        </form>
-    </main>
-
-    <p id="preview">{{ form.errors }}</p>
-
-    {#
-    <script>
-        form = document.querySelector("#testForm");
-        preview = document.querySelector("#preview");
-
-        form.addEventListener("submit", (e)=>{
-            e.preventDefault();
-
-            formData = new FormData(form)
-
-            fetch("{{ url_for('test.index') }}", {
-                method: "POST",
-                body: formData
-            })
-            .then(response=>{
-                if (response.ok) {
-                    return response.json();
-                }
-            })
-            .then(result=>{
-                console.log(result);
-                preview.textContent = result.email;
-            })
-            .catch(error=>{
-                console.error(error)
-            })
- 
-        })
-
-    </script>
-    #}
-
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Testing Ground</h1>
+    {{ form.tester.label }}{{ form.tester }}
+</body>
+</html>

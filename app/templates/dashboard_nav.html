@@ -1,0 +1,9 @@
+<nav>
+    <a class="font-extrabold" href="{{ url_for('main.index')}}">THE CODING JOURNAL</p>
+    <ul class="border">
+        <li><a href="{{ url_for('main.profile', username=current_user.username)}}">Dashboard</a></li>
+        <li class="nav"><a href="#">Posts</a></li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="{{ url_for('auth.logout')}}">Logout</a></li>
+    </ul>
+</nav>

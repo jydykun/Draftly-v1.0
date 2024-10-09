@@ -1,7 +1,8 @@
+from collections.abc import Iterator
 from flask_wtf import FlaskForm, RecaptchaField
 from flask_wtf.file import FileField, FileAllowed, FileSize, FileRequired
 from wtforms import StringField, PasswordField, EmailField, BooleanField, \
-    TextAreaField, SelectField
+    TextAreaField, SelectField, HiddenField
 from wtforms.validators import DataRequired, EqualTo, Email, Length, ValidationError
 from app.models import db, User, Subscriber
 from app import Config
@@ -38,6 +39,7 @@ class LoginForm(FlaskForm):
 
 #-----PostForm------#
 
+
 class PostForm(FlaskForm):
     title = StringField(validators=[DataRequired(), Length(max=50)])
     body = TextAreaField(validators=[DataRequired()])
@@ -45,7 +47,7 @@ class PostForm(FlaskForm):
     feature_image = FileField(
         "Featured Image",
         validators=[
-            FileRequired(),
+            #FileRequired(),
             FileSize(
                 Config.MAX_FILE_SIZE,
                 message=f"File size must not exceed {int(Config.MAX_FILE_SIZE/1000000)}MB"
@@ -57,6 +59,14 @@ class PostForm(FlaskForm):
 #-----End of PostForm-----#
 
 
+
+class EditPostForm(FlaskForm):
+    title = StringField(validators=[DataRequired(), Length(max=50)])
+    body = TextAreaField(validators=[DataRequired()])
+    category = SelectField("Category: ", choices=[])
+    replace_image_picker = HiddenField("Replace Image")
+
+
 class SubscribeForm(FlaskForm):
     email = EmailField("Email", validators=[DataRequired(), Email(check_deliverability=True)])
 
@@ -64,3 +74,8 @@ class SubscribeForm(FlaskForm):
         subscriber = db.session.scalar(db.select(Subscriber).where(Subscriber.email == email.data))
         if subscriber is not None:
             raise ValidationError("This email address is already exist.")
+        
+
+
+class TestForm(FlaskForm):
+    tester = SelectField("Tester", choices=[(1,"One"), (2,"Two"), (3,"Three")])

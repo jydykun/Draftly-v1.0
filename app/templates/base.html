@@ -36,6 +36,11 @@
 
 
     <script src="{{ url_for('static', filename='js/script.js' )}}"></script>
+
+    {% block script %}
+        {# Insert script here per page if needed #}
+    {% endblock %}
+
     <script>
         window.addEventListener("load", () => {
             const flashMessage = document.querySelector("#flashes");

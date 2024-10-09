@@ -5,9 +5,10 @@ from flask import Blueprint, render_template, request, \
     send_from_directory
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
+from sqlalchemy.orm import joinedload
 from app import Config
 from app.models import db, User, Post, Category, Subscriber
-from app.forms import PostForm, SubscribeForm
+from app.forms import PostForm, SubscribeForm, EditPostForm
 from app.utils import remove_image_tag, remove_html_tags
 
 
@@ -40,9 +41,6 @@ def inject():
 @main.route("/", methods=["GET", "POST"])
 def index():
 
-    # Query all the posts
-    #posts = db.paginate(db.select(Post).order_by(Post.timestamp.desc()), per_page=2, error_out=False)
-
     posts = db.session.scalars(db.select(Post).order_by(Post.timestamp.desc()).limit(4)).all()
 
     # Remove the image tag of the post in the homepage
@@ -56,7 +54,6 @@ def index():
 @main.route("/<category_key>")
 def category_page(category_key):
     category = db.first_or_404(db.select(Category).where(Category.key == category_key))
-    #posts = db.session.scalars(db.select(Post).where(Post.category_id == category.id)).all()
     posts = db.paginate(db.select(Post).where(Post.category_id == category.id).order_by(Post.timestamp.desc()), per_page=2, error_out=False)
 
     # Remove the image tag of the post in the homepage
@@ -202,3 +199,64 @@ def get_images():
             images.append({"url": url_for("main.uploaded_image", filename=filename)})
 
     return jsonify({"images": images}), 200
+
+
+@main.route("/api/posts", methods=["GET"])
+def get_all_posts():
+    posts = db.session.scalars(db.select(Post).order_by(Post.timestamp.desc())).all()
+
+    data = [
+        {
+            "title": post.title,
+            "body": post.body,
+            "featured_image": url_for("main.uploaded_image", filename=post.featured_image)
+        }
+        for post in posts
+    ]
+
+    return jsonify(data)
+
+@main.route("/delete-post/<int:post_id>", methods=["POST"])
+def delete_post(post_id):
+
+    post = db.session.get(Post, post_id)
+
+    db.session.delete(post)
+    db.session.commit()
+    flash("Post deleted successfully!", "success")
+
+    return redirect(url_for("main.profile", username=current_user.username))
+
+
+@main.route("/edit-post/<int:post_id>", methods=["GET","POST"])
+def edit_post(post_id):
+
+    post = db.session.get(Post, post_id)
+
+    # Query all the categories
+    categories = db.session.scalars(db.select(Category)).all()
+    category = post.category_id
+    
+    form = EditPostForm(obj=post)
+
+    category_choices = [(category.id, category.name) for category in categories]
+    form.category.choices = category_choices
+    
+
+    # Validate the form
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        post.category_id = form.category.data
+        new_feature_image = request.form.get("replace_image_picker")
+
+        if new_feature_image:
+            post.featured_image = new_feature_image
+        
+        db.session.commit()
+
+        flash(f"Updated Successfully{post.featured_image}", "success")
+        return redirect(url_for("main.profile", username=current_user.username))
+
+    return render_template("edit_post.html", title=f"{title} - Edit Post", categories=categories, form=form, category=category, post=post)
+
