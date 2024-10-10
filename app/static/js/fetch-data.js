@@ -1,14 +1,20 @@
 window.addEventListener("DOMContentLoaded", modalGallery);
 
 async function modalGallery(){
+    const gallery = document.querySelector("#modal-gallery");
     const triggerBtn = document.querySelector("#trigger-modal");
     const closeBtn = document.querySelector("#close-modal");
+    const fileInput = document.querySelector("#replace_image_picker");
+    const imgFilename = document.querySelector("#image-filename");
+    const imgPreview = document.querySelector("#image-preview");
+
     triggerBtn.addEventListener("click", openImageModal);
     closeBtn.addEventListener("click", closeModal);
+    gallery.innerHTML = ""; // Clear previous images
 
     function openImageModal() {
         document.querySelector("#modal").style.display = "block";
-        fetchImages(); // Fetch images from the server
+        fetchImages(); // Fetch images from the API
     }
     
     function closeModal() {
@@ -29,15 +35,10 @@ async function modalGallery(){
             }
 
             const data = await response.json();
-            const gallery = document.querySelector("#modal-gallery");
-            gallery.innerHTML = ""; // Clear previous images
 
             data.images.forEach(image => {
                 const imgContainer = document.createElement("div");
                 const img = document.createElement("img");
-                const fileInput = document.querySelector("#replace_image_picker");
-                const imgFilename = document.querySelector("#image-filename");
-                const imgPreview = document.querySelector("#image-preview");
                 const filename = image.url.split('/').pop();
                 
                 //Styling using Tailwind
@@ -48,15 +49,9 @@ async function modalGallery(){
                 img.addEventListener("click", ()=>{
                     imgPreview.src = "" // Clear the previous URL
                     fileInput.value = filename; // Set the hidden input value with the filename
-                    imgFilename.textContent = fileInput.value;
-                    const text = imgFilename.textContent
-                    imgPreview.src = `/images/${text}`
-
-                    //console.log(imgFilename)
-                    //console.log(fileInput)
-                    //console.log(imgPreview.src)
-
-                    closeModal();
+                    imgFilename.textContent = filename
+                    imgPreview.src = `/images/${filename}`
+                    closeModal(); //
                 })
 
                 imgContainer.appendChild(img);

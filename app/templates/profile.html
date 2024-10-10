@@ -10,24 +10,40 @@
     {% include "dashboard_nav.html" %}
 
     <!--Dashboard-->
-    <div class="col-span-10 border border-red-900">
-        <main class="m-5 border border-red-900">
-            <p class="text-xl">Dashboard</p>
-            <div class="flex items-center h-40 mb-5 p-10 bg-slate-200 border border-red-900 rounded-md">
+    <div class="col-span-10">
+        <main>
+
+            <div class="flex justify-between items-center p-5 border-b-2">
+                <p class="text-xl font-bold">Dashboard</p>
+                <div class="flex items-center">
+                    <a class="flex items-center mr-4 py-2 px-5 text-sm rounded-full bg-slate-900 text-slate-100" href="{{ url_for('main.create_post') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        <p>NEW POST</p>
+                    </a>
+                    <a href="#">
+                        <img class="size-10 rounded-full" src="{{ url_for('main.uploaded_image', filename='Image_20240922_001514.jpg')}}" alt="">
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="flex items-center h-40 p-5 border-b-2">
                 <p class="text-3xl font-bold">Welcome, {{ current_user.username.capitalize() }}</p>
             </div>
 
-            <div class="border border-red-900">
-                <div class="grid grid-cols-2 gap-2 border border-red-900">
+            <div>
+                <div class="grid grid-cols-2 gap-10">
                     <div>
-                        <p>Published Posts</p>
+                        <p class="p-5 font-bold border-b-2">Published Posts</p>
                         {% for post in posts %}
-                        <div class="flex items-center justify-between p-2">
+                        <div class="flex items-center justify-between mx-5 py-2">
                             <div class="flex items-center">
-                                <img class="size-10 mr-2" src="{{ url_for('main.uploaded_image', filename=post.featured_image) }}">
+                                <img class="size-10 mr-2 rounded-md" src="{{ url_for('main.uploaded_image', filename=post.featured_image) }}">
                                 <div class="mr-2">
-                                    <p><a href="{{ url_for('main.single_post', post_id=post.id) }}">{{ post.title }}</a></p>
-                                    <i class="text-sm">Published: {{ post.timestamp }}</i>
+                                    <a class="block font-semibold" href="{{ url_for('main.single_post', post_id=post.id) }}">{{ post.title }}</a>
+                                    <i class="text-xs">Published: {{ post.timestamp }}</i>
                                 </div>
                             </div>
                             
@@ -47,10 +63,14 @@
                             </div>
                         </div>
                         {% endfor %}
+                        <a class="block mx-5 my-3" href="">See All Posts</a>
                     </div>
                     
-                    <div>
-                        <p>Motherfucker</p>
+                    <div class="flex flex-col justify-center items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                          </svg>
+                        <p class="text-2xl">This Section Is Under Construction</p>
                     </div>
 
                 </div>
@@ -58,18 +78,6 @@
 
             </div>
 
-
-            <div class="hidden">
-                <form action="{{ url_for('main.profile', username=current_user.username) }}" method="POST" enctype="multipart/form-data" novalidate>
-                    {{ form.hidden_tag() }}
-                    {{ form.title }}
-                    {{ form.body(id="tinymce_editor") }}
-                    {{ form.category.label }}{{ form.category }}
-                    {{ form.feature_image.label }}{{ form.feature_image }}
-                    <button type="submit">Save</button>
-                </form>
-                {{ form.errors }}
-            </div>
         </main>
     </div>
 </div>
@@ -96,6 +104,7 @@
     </div>
 
     <p><img id="preview-image" src="" alt=""></p>
+
 {% endblock %}
 
 {% block footer %}

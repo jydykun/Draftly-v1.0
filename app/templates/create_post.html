@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block header %}
+  {# LEAVE THIS BLANK #}
+{% endblock %}
+
+{% block body %}
+<div class="grid grid-cols-12">
+    <!--Navigation-->
+    {% include "dashboard_nav.html" %}
+
+    <!--Dashboard-->
+    <div class="col-span-10">
+        <main>
+
+            <div class="p-5">
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    {{ form.hidden_tag() }}
+                    {{ form.title(class="w-full p-2 rounded ring-2 ring-gray-200", placeholder="Post Title") }}
+                    <i class="block my-2 text-sm text-red-600">{{ form.title.errors[0] }}</i>
+                    {{ form.body(id="tinymce_editor") }}
+                    <i class="block my-2 text-sm text-red-600">{{ form.body.errors[0] }}</i>
+                    <div class="flex">
+                        <div class="mr-5">
+                            {{ form.category.label }}{{ form.category(class="border-2 p-1") }}
+                            <div class="mt-2">
+                                {{ form.feature_image.label }}{{ form.feature_image }}
+                            </div>
+                        </div>
+                        <img id="preview-image" class="w-40 bg-slate-500" src="">
+                    </div>
+                    <button class="block mt-5 px-5 py-2 rounded-md text-slate-50 bg-slate-900" type="submit">Publish</button>
+                </form>
+            </div>
+
+        </main>
+    </div>
+</div>
+    
+
+    <div id="modal" class="fixed left-0 top-0 w-full h-full z-[9999] bg-slate-300/75 hidden">
+        <div class="flex items-center h-full">
+            <div class="modal-content container mx-auto p-10 rounded-md bg-slate-100 shadow-md">
+                <div class="flex justify-between mb-5">
+                    <p class="text-2xl text-slate-900">Add Image</p>
+                    <button id="close-modal" class="px-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 fill-slate-900">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="modal-gallery" class="grid grid-cols-5 h-96 gap-4 overflow-y-auto">
+                    <div id="image-container" class="h-40 flex items-center overflow-hidden border border-red-900">
+                        <!--Image Gallery Here-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+  {# LEAVE THIS BLANK #}
+{% endblock %}
+
+{% block script %}
+    {# LEAVE THIS BLANK #}
+{% endblock %}

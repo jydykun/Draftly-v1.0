@@ -43,9 +43,9 @@ class LoginForm(FlaskForm):
 class PostForm(FlaskForm):
     title = StringField(validators=[DataRequired(), Length(max=50)])
     body = TextAreaField(validators=[DataRequired()])
-    category = SelectField("Category: ", choices=[])
+    category = SelectField("Category : ", choices=[])
     feature_image = FileField(
-        "Featured Image",
+        "Featured Image : ",
         validators=[
             #FileRequired(),
             FileSize(

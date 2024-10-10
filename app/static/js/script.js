@@ -19,6 +19,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
     function selectImage(imageUrl, callback) {
         callback(imageUrl)
+        console.log(imageUrl)
         closeModal();
     }
     
@@ -49,6 +50,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
         plugins: "image save visualblocks code pagebreak nonbreaking preview",
         toolbar: "undo redo image visualblocks code pagebreak nonbreaking preview",
         images_upload_url: "/upload",
+        image_prepend_url: "..",
         file_picker_callback: function (callback) {
             openImageModal(callback); // Call the modal open function
         },

@@ -68,56 +68,13 @@ def category_page(category_key):
 @login_required
 def profile(username):
     # Get the user
-    user = db.first_or_404(db.select(User).where(User.username == username))
+    db.first_or_404(db.select(User).where(User.username == username))
 
     # Query all the posts
-    posts = db.session.scalars(db.select(Post).where(Post.user_id == user.id)).all()
+    posts = db.session.scalars(db.select(Post).order_by(Post.timestamp.desc()).limit(4)).all()
 
-    # Query all the categories
-    categories = db.session.scalars(db.select(Category)).all()
 
-    if user.username != current_user.username:
-        return "You must logged in first."
-    
-    form = PostForm()
-
-    category_choices = [(category.id, category.name) for category in categories]
-    form.category.choices = category_choices
-
-    # Validate the form
-    if form.validate_on_submit():
-        feature_image = form.feature_image.data
-        filename = secure_filename(feature_image.filename)
-
-        _, ext = os.path.splitext(filename)
-        new_filename = f'f_image_{datetime.now().strftime("%Y%m%d_%H%M%S")}{ext}'
-        filename = new_filename
-
-        # Check if the uploads folder exist
-        dir = os.path.join(current_app.root_path, Config.UPLOAD_FOLDER)
-
-        if not os.path.exists(dir):
-            # Make the uploads folder
-            os.makedirs(dir)
-            
-        # Save the image file to the path
-        filepath = os.path.join(dir, new_filename)
-        feature_image.save(filepath)
-
-        post = Post(
-            title = form.title.data,
-            body = form.body.data,
-            featured_image = filename,
-            user_id = current_user.id,
-            category_id = form.category.data
-            )
-        db.session.add(post)
-        db.session.commit()
-
-        flash("Posted Successfully")
-        return redirect(url_for("main.profile", username=current_user.username))
-
-    return render_template("profile.html", title=f"{title} - Profile", posts=posts, categories=categories, form=form)
+    return render_template("profile.html", title=f"{title} - Profile", posts=posts)
 
 
 @main.route("/upload", methods=["POST"])
@@ -215,6 +172,55 @@ def get_all_posts():
     ]
 
     return jsonify(data)
+
+
+@main.route("/create-post", methods=["GET", "POST"])
+@login_required
+def create_post():
+
+    # Query all the categories
+    categories = db.session.scalars(db.select(Category)).all()
+
+    form = PostForm()
+
+    category_choices = [(category.id, category.name) for category in categories]
+    form.category.choices = category_choices
+
+    # Validate the form
+    if form.validate_on_submit():
+        feature_image = form.feature_image.data
+        filename = secure_filename(feature_image.filename)
+
+        _, ext = os.path.splitext(filename)
+        new_filename = f'f_image_{datetime.now().strftime("%Y%m%d_%H%M%S")}{ext}'
+        filename = new_filename
+
+        # Check if the uploads folder exist
+        dir = os.path.join(current_app.root_path, Config.UPLOAD_FOLDER)
+
+        if not os.path.exists(dir):
+            # Make the uploads folder
+            os.makedirs(dir)
+            
+        # Save the image file to the path
+        filepath = os.path.join(dir, new_filename)
+        feature_image.save(filepath)
+
+        post = Post(
+            title = form.title.data,
+            body = form.body.data,
+            featured_image = filename,
+            user_id = current_user.id,
+            category_id = form.category.data
+            )
+        db.session.add(post)
+        db.session.commit()
+
+        flash("Posted Successfully")
+        return redirect(url_for("main.profile", username=current_user.username))
+
+    return render_template("create_post.html", title=f"{title} - Create A Post", categories=categories, form=form)
+
 
 @main.route("/delete-post/<int:post_id>", methods=["POST"])
 def delete_post(post_id):
