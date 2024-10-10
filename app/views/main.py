@@ -71,7 +71,7 @@ def profile(username):
     db.first_or_404(db.select(User).where(User.username == username))
 
     # Query all the posts
-    posts = db.session.scalars(db.select(Post).order_by(Post.timestamp.desc()).limit(4)).all()
+    posts = db.session.scalars(db.select(Post).where(Post.u_posts.has(username=username)).order_by(Post.timestamp.desc()).limit(4)).all()
 
 
     return render_template("profile.html", title=f"{title} - Profile", posts=posts)
