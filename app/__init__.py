@@ -24,9 +24,6 @@ def create_app():
     from app.views.main import main
     app.register_blueprint(main)
 
-    from app.views.dashboard import dashboard
-    app.register_blueprint(dashboard)
-
     from app.views.auth import auth
     app.register_blueprint(auth)
 

@@ -15,6 +15,7 @@ async function modalGallery(){
     function openImageModal() {
         document.querySelector("#modal").style.display = "block";
         fetchImages(); // Fetch images from the API
+
     }
     
     function closeModal() {
