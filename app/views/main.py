@@ -73,7 +73,7 @@ def category_page(category_key):
     return render_template("category_page.html", category=category, category_class=category_class, posts=posts)
 
 
-@main.route("/profile/<username>", methods=["GET", "POST"])
+@main.route("/dashboard/<username>", methods=["GET", "POST"])
 @login_required
 def profile(username):
     # Get the user
@@ -133,7 +133,17 @@ def articles():
 def single_post(post_id):
     post = db.get_or_404(Post, post_id)
     posts = db.session.scalars(db.select(Post).order_by(Post.timestamp.desc()).limit(4)).all()
-    return render_template("post.html", post=post, posts=posts)
+
+    #CSS Classes
+    category_mapping = {
+        "design" : "c-design",
+        "development" : "c-development",
+        "user-experience" : "c-ux",
+        "artificial-intelligence" : "c-ai"
+    }
+    category_class = category_mapping.get(post.c_posts.key)
+
+    return render_template("post.html", post=post, posts=posts, category_class=category_class)
 
 
 @main.route("/subscribe", methods=["POST"])
