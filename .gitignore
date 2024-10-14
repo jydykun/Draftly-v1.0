@@ -11,6 +11,9 @@ env/
 # Ignore node_modules folder
 node_modules/
 
+#
+migration/
+
 # Log files
 *.log
 
