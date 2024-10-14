@@ -6,36 +6,39 @@
 
 {% block body %}
 <div class="grid grid-cols-12">
-    
+    <!--Navigation-->
     {% include "dashboard_nav.html" %}
 
-    <div class="col-span-10 border border-red-900">
-        <main class="m-5 border border-red-900">
+    <!--Edit Post-->
+    <div class="col-span-10">
+        <main class="m-5">
             <p class="text-xl">Edit Post</p>
-            {{ test }}
-            <div>
+            <div class="mt-5">
                 <form method="POST" enctype="multipart/form-data" novalidate>
                     {{ form.hidden_tag() }}
-                    {{ form.title }}
+                    {{ form.title(class="w-full p-2 rounded ring-2 ring-gray-200", placeholder="Post Title") }}
+                    <i class="block my-2 text-sm text-red-600">{{ form.title.errors[0] }}</i>
                     {{ form.body(id="tinymce_editor") }}
+                    <i class="block my-2 text-sm text-red-600">{{ form.body.errors[0] }}</i>
                     {{ form.category.label }}
-                    <select name="category" id="category">
+                    <select class="border-2 p-1" name="category" id="category">
                         {% for category in form.category.choices %}
                             <option value="{{ category[0] }}" {% if category[0] == post.category_id %}selected{% endif %}>
                                 {{ category[1] }}
                             </option>
                         {% endfor %}
                     </select>
+                    <div>
                     {{ form.replace_image_picker }}
-                    <p id="image-filename"></p>
+                        <p class="my-2">Featured Image:</p>
+                        <div class="relative w-fit">
+                            <p id="trigger-modal" class="invisible absolute top-0 left-0 flex justify-center items-center w-full h-full text-xl text-center bg-slate-300/75 cursor-pointer">Replace Image</p>
+                            <img id="image-preview" class="w-40" src="{{ url_for('main.uploaded_image', filename=post.featured_image)}}">
+                        </div>
+                    </div>
 
-                    <button type="submit">Save</button>
-                    {{ test }}
+                    <button class="block mt-3 px-5 py-2 rounded-md text-slate-50 bg-slate-900 transition-all hover:bg-slate-400" type="submit">Update</button>
                 </form>
-
-                <button id="trigger-modal">Replace Image</button>
-                <img id="image-preview" class="size-10" src="{{ url_for('main.uploaded_image', filename=post.featured_image)}}">
-                {{ form.errors  }}
 
                 <div id="modal" class="fixed left-0 top-0 w-full h-full z-[9999] bg-slate-300/75 hidden">
                     <div class="flex items-center h-full">

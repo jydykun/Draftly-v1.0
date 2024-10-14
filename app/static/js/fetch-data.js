@@ -5,7 +5,6 @@ async function modalGallery(){
     const triggerBtn = document.querySelector("#trigger-modal");
     const closeBtn = document.querySelector("#close-modal");
     const fileInput = document.querySelector("#replace_image_picker");
-    const imgFilename = document.querySelector("#image-filename");
     const imgPreview = document.querySelector("#image-preview");
 
     triggerBtn.addEventListener("click", openImageModal);
@@ -50,7 +49,6 @@ async function modalGallery(){
                 img.addEventListener("click", ()=>{
                     imgPreview.src = "" // Clear the previous URL
                     fileInput.value = filename; // Set the hidden input value with the filename
-                    imgFilename.textContent = filename
                     imgPreview.src = `/images/${filename}`
                     closeModal(); //
                 })
@@ -64,3 +62,14 @@ async function modalGallery(){
         }
     }
 }
+
+const triggerBtn = document.querySelector("#trigger-modal");
+const imgPreview = document.querySelector("#image-preview");
+
+imgPreview.addEventListener("mouseover", ()=>{
+    triggerBtn.style.visibility = "visible";
+});
+
+triggerBtn.addEventListener("mouseleave", ()=>{
+    triggerBtn.style.visibility = "hidden";
+});
