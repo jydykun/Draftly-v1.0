@@ -58,7 +58,7 @@ class Category(db.Model):
 
     # Debugging Purposes
     def __repr__(self) -> str:
-        return f"Category(id={self.id}, value={self.key}, name={self.name})"
+        return f"Category(id={self.id}, key={self.key}, name={self.name})"
 
 
 # Posts Model

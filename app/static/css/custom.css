@@ -71,6 +71,30 @@ for this wonderful menu animation
   transform: rotate(-135deg);
 }
 
+.hero, .c-design,
+.c-development, .c-ux,
+.c-ai {
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.hero,
+.c-development {
+  background-image: url("../images/pexels-negativespace-34658.jpg");
+  background-position: center center;
+}
+
+.c-design {
+  background-image: url("../images/pexels-tranmautritam-326514.jpg");
+}
+
+.c-ux {
+  background-image: url("../images/pexels-picjumbo-com-55570-196645.jpg");
+}
+
+.c-ai {
+  background-image: url("../images/pexels-tara-winstead-8386440.jpg");
+}
 
 #single-post-format h2,
 #single-post-format p,

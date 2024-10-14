@@ -54,14 +54,23 @@ def index():
 @main.route("/<category_key>")
 def category_page(category_key):
     category = db.first_or_404(db.select(Category).where(Category.key == category_key))
-    posts = db.paginate(db.select(Post).where(Post.category_id == category.id).order_by(Post.timestamp.desc()), per_page=2, error_out=False)
+    posts = db.paginate(db.select(Post).where(Post.category_id == category.id).order_by(Post.timestamp.desc()), per_page=9, error_out=False)
+
+    #CSS Classes
+    category_mapping = {
+        "design" : "c-design",
+        "development" : "c-development",
+        "user-experience" : "c-ux",
+        "artificial-intelligence" : "c-ai"
+    }
+    category_class = category_mapping.get(category_key)
 
     # Remove the image tag of the post in the homepage
     for post in posts:
         #post.body_without_images = remove_image_tag(post.body)
         post.text_only = remove_html_tags(post.body)
 
-    return render_template("category_page.html", category=category, posts=posts)
+    return render_template("category_page.html", category=category, category_class=category_class, posts=posts)
 
 
 @main.route("/profile/<username>", methods=["GET", "POST"])
