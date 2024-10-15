@@ -2,13 +2,19 @@
 
 {% block body %}
 <section class="{{ category_class }} h-64 mb-20 border-b-4 border-slate-900 bg-slate-200 overflow-hidden md:m-0 md:border-0">
+    
 </section>
 
 <div class="container mx-auto mb-20 px-8 bg-white md:-mt-32 md:pt-10 md:border-t-4 md:border-slate-900">
     <div class="grid grid-cols-1 md:grid-cols-12 md:gap-10">
         <div class="col-span-8 mb-20">
             <article>
-                <a class="hover:text-slate-400" href="{{ url_for('main.category_page', category_key=post.c_posts.key)}}"><p class="my-3 uppercase">{{ post.c_posts.name}}</p></a>
+                {% if current_user.is_authenticated %}
+                <a class="p-2 bg-slate-900 text-slate-50 border-2 border-slate-900 rounded-md transition-all hover:bg-slate-50 hover:text-slate-900" href="{{ url_for('main.edit_post', post_id=post.id )}}">Edit Post</a>
+                {% endif %}
+                <a class="hover:text-slate-400" href="{{ url_for('main.category_page', category_key=post.c_posts.key)}}">
+                    <p class="my-3 uppercase">{{ post.c_posts.name}}</p>
+                </a>
                 <h1 class="mb-3 text-5xl font-bold">{{ post.title }}</h1>
                 <p class="mb-10"><i>By {{ post.u_posts.username }}</i></p>
                 <section id="single-post-format">
