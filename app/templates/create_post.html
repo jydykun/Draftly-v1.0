@@ -13,7 +13,11 @@
     <div class="col-span-10">
         <main>
 
-            <div class="p-5">
+            <div class="flex justify-between items-center p-5 border-b-2">
+                <p class="text-xl font-bold">Create Post</p>
+            </div>
+
+            <div class="m-5">
                 <form method="POST" enctype="multipart/form-data" novalidate>
                     {{ form.hidden_tag() }}
                     {{ form.title(class="w-full p-2 rounded ring-2 ring-gray-200", placeholder="Post Title") }}

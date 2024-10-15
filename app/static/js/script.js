@@ -47,14 +47,16 @@ window.addEventListener("DOMContentLoaded", ()=>{
     tinymce.init({
         selector: "#tinymce_editor",
         license_key: "gpl",
-        plugins: "image save visualblocks code pagebreak nonbreaking preview",
-        toolbar: "undo redo image visualblocks code pagebreak nonbreaking preview",
+        plugins: "image save visualblocks code pagebreak nonbreaking preview accordion fullscreen\
+        wordcount help lists link autolink",
+        toolbar: "undo redo | styles bold italic lineheight align forecolor backcolor blockquote\
+         | link numlist bullist | preview code fullscreen",
         images_upload_url: "/upload",
         image_prepend_url: "..",
         file_picker_callback: function (callback) {
             openImageModal(callback); // Call the modal open function
         },
-        visualblocks_default_state: true
+        visualblocks_default_state: true,
     });
 
 
@@ -126,4 +128,3 @@ window.addEventListener("DOMContentLoaded", ()=>{
     }
 
 });
-

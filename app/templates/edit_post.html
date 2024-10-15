@@ -10,10 +10,13 @@
     {% include "dashboard_nav.html" %}
 
     <!--Edit Post-->
-    <div class="col-span-10">
-        <main class="m-5">
-            <p class="text-xl">Edit Post</p>
-            <div class="mt-5">
+    <div class="col-span-10 h-dvh overflow-y-scroll">
+        <main>
+            <div class="flex justify-between items-center p-5 border-b-2">
+                <p class="text-xl font-bold">Edit Post</p>
+            </div>
+
+            <div class="m-5">
                 <form method="POST" enctype="multipart/form-data" novalidate>
                     {{ form.hidden_tag() }}
                     {{ form.title(class="w-full p-2 rounded ring-2 ring-gray-200", placeholder="Post Title") }}

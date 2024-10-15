@@ -1,4 +1,7 @@
-window.addEventListener("DOMContentLoaded", modalGallery);
+window.addEventListener("DOMContentLoaded", () => {
+    modalGallery();
+    replaceImage();
+});
 
 async function modalGallery(){
     const gallery = document.querySelector("#modal-gallery");
@@ -19,6 +22,7 @@ async function modalGallery(){
     
     function closeModal() {
         document.querySelector("#modal").style.display = "none";
+        gallery.innerHTML = ""; // Clear previous images
     }
 
     async function fetchImages() {
@@ -47,7 +51,7 @@ async function modalGallery(){
                 img.src = image.url; //Store the URL here from the API
 
                 img.addEventListener("click", ()=>{
-                    imgPreview.src = "" // Clear the previous URL
+                    imgPreview.src = " " // Clear the previous URL
                     fileInput.value = filename; // Set the hidden input value with the filename
                     imgPreview.src = `/images/${filename}`
                     closeModal(); //
@@ -63,13 +67,15 @@ async function modalGallery(){
     }
 }
 
-const triggerBtn = document.querySelector("#trigger-modal");
-const imgPreview = document.querySelector("#image-preview");
+function replaceImage(){
+    const triggerBtn = document.querySelector("#trigger-modal");
+    const imgPreview = document.querySelector("#image-preview");
 
-imgPreview.addEventListener("mouseover", ()=>{
-    triggerBtn.style.visibility = "visible";
-});
+    imgPreview.addEventListener("mouseover", ()=>{
+        triggerBtn.style.visibility = "visible";
+    });
 
-triggerBtn.addEventListener("mouseleave", ()=>{
-    triggerBtn.style.visibility = "hidden";
-});
+    triggerBtn.addEventListener("mouseleave", ()=>{
+        triggerBtn.style.visibility = "hidden";
+    });
+}
