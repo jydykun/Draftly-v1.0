@@ -1,2 +1,2 @@
-# theblog
+# Draftly
  
