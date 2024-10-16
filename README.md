@@ -32,6 +32,7 @@ Draftly is a beginner-friendly blog engine designed for simplicity. It allows us
     ├── tailwind.config.js # Tailwind CSS configuration
     ├── wsgi.py           # WSGI entry point for deployment
     └── requirements.txt  # Python dependencies
+```
 
 
 ## Table of Contents
