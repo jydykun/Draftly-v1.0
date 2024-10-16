@@ -17,7 +17,7 @@ Draftly is a beginner-friendly blog engine designed for simplicity. It allows us
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/draftly.git
+git clone https://github.com/jydykun/Draftly.git
 cd draftly
 ```
 
