@@ -13,40 +13,40 @@ Draftly is a beginner-friendly blog engine designed for simplicity. It allows us
 - SQLite Database: Simple, lightweight database for managing content.
 - Still Under Construction: Some features are being finalized!
 
-## Project Structure
+## Installation & Setup
+
+1. Clone the repository
 ```bash
-    /Draftly
-    │
-    ├── /app              # Contains the core Flask app (blueprints, models, routes)
-    │   ├── __init__.py   # App factory function (create_app)
-    │   ├── models.py     # Database models
-    │   ├── routes.py     # Application routes (post & dashboard logic)
-    │
-    ├── /instance         # Configuration files (e.g., SQLite database)
-    │   └── draftly.db    # SQLite database (auto-generated after migration)
-    │
-    ├── /venv             # Virtual environment (not tracked by Git)
-    ├── .gitignore        # Files and folders to ignore in Git
-    ├── cli.py            # Custom CLI commands for managing the app
-    ├── config.py         # App configuration (environment variables loaded here)
-    ├── tailwind.config.js # Tailwind CSS configuration
-    ├── wsgi.py           # WSGI entry point for deployment
-    └── requirements.txt  # Python dependencies
+    git clone https://github.com/yourusername/draftly.git
+    cd draftly
 ```
 
+2. Set up a virtual environment
+```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-- [Acknowledgments](#acknowledgments)
+3. Install Dependencies
+```bash
+    pip install -r requirements.txt
+```
 
-## Installation
-To install this project, follow these steps:
+4. Initialize Database
+```bash
+    python cli.py init-db
+```
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/username/my-awesome-project.git
-sfdfsd
+5. Run the Development Server
+```bash
+    python cli.py run-debug
+```
+
+## Deployment
+4. Using Render:
+- Configure the Start Command:
+```bash
+    gunicorn wsgi:app
+```
+- Ensure environment variables are properly set (e.g., FLASK_ENV).
+- Optionally, use persistent volumes on Render to store your SQLite database.
