@@ -17,36 +17,36 @@ Draftly is a beginner-friendly blog engine designed for simplicity. It allows us
 
 1. Clone the repository
 ```bash
-    git clone https://github.com/yourusername/draftly.git
-    cd draftly
+git clone https://github.com/yourusername/draftly.git
+cd draftly
 ```
 
 2. Set up a virtual environment
 ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 3. Install Dependencies
 ```bash
-    pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 4. Initialize Database
 ```bash
-    python cli.py init-db
+python cli.py init-db
 ```
 
 5. Run the Development Server
 ```bash
-    python cli.py run-debug
+python cli.py run-debug
 ```
 
 ## Deployment
 4. Using Render:
 - Configure the Start Command:
 ```bash
-    gunicorn wsgi:app
+gunicorn wsgi:app
 ```
 - Ensure environment variables are properly set (e.g., FLASK_ENV).
 - Optionally, use persistent volumes on Render to store your SQLite database.
