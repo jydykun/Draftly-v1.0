@@ -1,10 +1,10 @@
 # Draftly
 A minimal blog engine built with Flask, styled with Tailwind CSS, and powered by TinyMCE. Work in progress...
 
-## Overview
+## 🚀Overview
 Draftly is a beginner-friendly blog engine designed for simplicity. It allows users to create and manage posts with categories (no tags) through a dashboard. The project uses Flask on the backend, with a focus on delivering clean designs using Tailwind CSS and dynamic post editing with TinyMCE.
 
-## Features
+## 🌟Features
 - Post Management: Create, update, and delete posts with category support.
 - Dashboard Interface: Manage your content easily from an admin dashboard.
 - TinyMCE Editor: Rich text editor for creating engaging blog posts.
@@ -13,7 +13,7 @@ Draftly is a beginner-friendly blog engine designed for simplicity. It allows us
 - SQLite Database: Simple, lightweight database for managing content.
 - Still Under Construction: Some features are being finalized!
 
-## Installation & Setup
+## 🛠Installation & Setup
 
 1. Clone the repository
 ```bash
@@ -42,7 +42,7 @@ python cli.py init-db
 python cli.py run-debug
 ```
 
-## Deployment
+## 🌐Deployment
 1. Using Render:
 - Configure the Start Command:
 ```bash
@@ -51,11 +51,17 @@ gunicorn wsgi:app
 - Ensure environment variables are properly set (e.g., FLASK_ENV).
 - Optionally, use persistent volumes on Render to store your SQLite database.
 
-
-## Technologies Used
+## 📋Technologies Used
 
 - Flask: Backend framework to power the blog engine.
 - SQLite: Lightweight database to store posts and categories.
 - TinyMCE: Rich text editor for creating blog posts.
 - Tailwind CSS: Utility-first framework for styling the blog.
 - Gunicorn: WSGI server for deployment.
+
+## 💡To-Do / Future Features
+
+- User authentication and role-based access control.
+- Post analytics and visitor tracking.
+- Implement search functionality across posts.
+- Add pagination to the blog and dashboard.
