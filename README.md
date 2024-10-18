@@ -11,7 +11,7 @@ Draftly is a beginner-friendly blog engine designed for simplicity. It allows us
 - Tailwind CSS Styling: Responsive design with minimal custom CSS.
 - Blueprints in Flask: Clean structure with modular routes and views.
 - SQLite Database: Simple, lightweight database for managing content.
-- Still Under Construction: Some features are being finalized!
+- Still Under Construction: Some features are being idealized!
 
 ## 🛠Installation & Setup
 
@@ -61,7 +61,7 @@ gunicorn wsgi:app
 
 ## 💡To-Do / Future Features
 
-- User authentication and role-based access control.
+- Role-based access control.
 - Post analytics and visitor tracking.
 - Implement search functionality across posts.
-- Add pagination to the blog and dashboard.
+- Provide commenting functionality.
