@@ -141,6 +141,7 @@ def articles():
 @main.route("/post/<int:post_id>")
 def single_post(post_id):
     post = db.get_or_404(Post, post_id)
+    title=f"{post.title} - {Config.APP_NAME}"
     posts = db.session.scalars(db.select(Post).order_by(Post.timestamp.desc()).limit(4)).all()
 
     #CSS Classes
@@ -152,7 +153,7 @@ def single_post(post_id):
     }
     category_class = category_mapping.get(post.c_posts.key)
 
-    return render_template("post.html", post=post, posts=posts, category_class=category_class)
+    return render_template("post.html", title=title, post=post, posts=posts, category_class=category_class)
 
 
 @main.route("/subscribe", methods=["POST"])
