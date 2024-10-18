@@ -7,18 +7,15 @@ from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from app import Config
 from app.models import db, User, Post, Category, Subscriber
-from app.forms import PostForm, SubscribeForm, EditPostForm
+from app.forms import PostForm, SubscribeForm, EditPostForm, CategoryForm
 from app.utils import remove_image_tag, remove_html_tags
+from sqlalchemy import func
 
 
 ### MAIN BLUEPRINT STARTS HERE ###
 
-title = Config.APP_NAME
-
 
 main = Blueprint("main", __name__)
-
-
 
 
 # A context processor runs before each request, injecting variables into the template context for all routes.
@@ -31,6 +28,7 @@ def inject():
     subscribe_form = SubscribeForm()
 
     return {
+        "app_name": Config.APP_NAME,
         "categories": categories,
         "subscribe_form": subscribe_form,
         }
@@ -41,6 +39,8 @@ def inject():
 @main.route("/", methods=["GET", "POST"])
 def index():
 
+    title=f"Homepage - {Config.APP_NAME}"
+
     posts = db.session.scalars(db.select(Post).order_by(Post.timestamp.desc()).limit(4)).all()
 
     # Remove the image tag of the post in the homepage
@@ -48,7 +48,7 @@ def index():
         #post.body_without_images = remove_image_tag(post.body)
         post.text_only = remove_html_tags(post.body)
 
-    return render_template("index.html", posts=posts, title=f"{title} - Homepage")
+    return render_template("index.html", title=title, posts=posts)
 
 
 @main.route("/<category_key>")
@@ -63,6 +63,7 @@ def category_page(category_key):
         "user-experience" : "c-ux",
         "artificial-intelligence" : "c-ai"
     }
+
     category_class = category_mapping.get(category_key)
 
     # Remove the image tag of the post in the homepage
@@ -73,17 +74,21 @@ def category_page(category_key):
     return render_template("category_page.html", category=category, category_class=category_class, posts=posts)
 
 
-@main.route("/dashboard/<username>", methods=["GET", "POST"])
+@main.route("/dashboard/<username>")
 @login_required
 def profile(username):
+    title=f"Dashboard - {Config.APP_NAME}"
+    category = db.session.get(Category,1)
+
     # Get the user
     db.first_or_404(db.select(User).where(User.username == username))
 
     # Query all the posts
     posts = db.session.scalars(db.select(Post).where(Post.u_posts.has(username=username)).order_by(Post.timestamp.desc()).limit(4)).all()
+    categories = db.session.scalars(db.select(Category)).all()
+    form = CategoryForm()
 
-
-    return render_template("profile.html", title=f"{title} - Profile", posts=posts)
+    return render_template("profile.html", title=title, posts=posts, categories=categories, form=form, category=category, page_name="dashboard")
 
 
 @main.route("/upload", methods=["POST"])
@@ -196,6 +201,7 @@ def get_all_posts():
 @main.route("/create-post", methods=["GET", "POST"])
 @login_required
 def create_post():
+    title=f"Create Post - {Config.APP_NAME}"
 
     # Query all the categories
     categories = db.session.scalars(db.select(Category)).all()
@@ -238,7 +244,7 @@ def create_post():
         flash("Posted Successfully")
         return redirect(url_for("main.profile", username=current_user.username))
 
-    return render_template("create_post.html", title=f"{title} - Create A Post", categories=categories, form=form)
+    return render_template("create_post.html", title=title, categories=categories, form=form)
 
 
 @main.route("/delete-post/<int:post_id>", methods=["POST"])
@@ -255,6 +261,8 @@ def delete_post(post_id):
 
 @main.route("/edit-post/<int:post_id>", methods=["GET","POST"])
 def edit_post(post_id):
+
+    title=f"Edit Post - {Config.APP_NAME}"
 
     post = db.session.get(Post, post_id)
 
@@ -283,5 +291,46 @@ def edit_post(post_id):
         flash(f"Updated Successfully", "success")
         return redirect(url_for("main.profile", username=current_user.username))
 
-    return render_template("edit_post.html", title=f"{title} - Edit Post", categories=categories, form=form, category=category, post=post)
+    return render_template("edit_post.html", title=title, categories=categories, form=form, category=category, post=post, page_name="edit_post")
+
+@main.route("/add-category", methods=["POST"])
+def add_category():
+    form = CategoryForm()
+
+    
+    if form.validate_on_submit():
+
+        if db.session.scalar(db.select(func.count(Category.id))) >= 4:
+            flash("Limit reached! You can only create a maximum of 4 categories for now.","error")
+            return redirect(url_for("main.profile", username=current_user.username))
+
+        key = form.category.data.lower()
+
+        category = Category(
+            key = key.replace(" ","-"),
+            name = form.category.data
+        )
+        db.session.add(category)
+        db.session.commit()
+        flash("New Category Saved.", "success")
+        return redirect(url_for("main.profile", username=current_user.username))
+    else:
+        return redirect(url_for("main.profile", username=current_user.username))
+    
+
+@main.route("/delete-category/<int:category_id>", methods=["POST"])
+def delete_category(category_id):
+
+    category = db.session.get(Category, category_id)
+    
+    if category.posts:
+        flash("Cannot delete category with associated posts.", "error")
+        return redirect(url_for("main.profile", username=current_user.username))
+
+    db.session.delete(category)
+    db.session.commit()
+    flash("Category deleted successfully!", "success")
+
+    return redirect(url_for("main.profile", username=current_user.username))
+
 

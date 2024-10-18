@@ -2,11 +2,18 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_user, current_user, login_required, logout_user
 from app.forms import SignupForm, LoginForm
 from app.models import db, User
-from app.views.main import title
+from app import Config
 
 ### AUTH BLUEPRINT STARTS HERE ###
 
 auth = Blueprint("auth", __name__)
+
+@auth.context_processor
+def inject():
+    return {
+        "title": Config.APP_NAME,
+        "app_name": Config.APP_NAME,
+        }
 
 
 @auth.route("/auth/signup", methods=["GET","POST"])
@@ -27,7 +34,7 @@ def signup():
         flash("You are now registered!", "success")
         return redirect(url_for("auth.login"))
     
-    return render_template("signup.html", form=form, title=f"{title} - Sign Up")
+    return render_template("signup.html", form=form)
 
 
 @auth.route("/auth/login", methods=["GET","POST"])
@@ -50,7 +57,7 @@ def login():
                 return redirect(url_for("main.profile", username=current_user.username))
         else:
             flash("Incorrect username or password.", "error")
-    return render_template("login.html", form=form, title=f"{title} - Log In")
+    return render_template("login.html", form=form)
 
 
 @auth.route("/auth/logout")

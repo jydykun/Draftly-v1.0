@@ -91,8 +91,9 @@ class Comment(db.Model):
     
     user_id: Mapped[int] = mapped_column(ForeignKey(User.id))
     u_comments: Mapped["User"] = relationship(back_populates="comments")
+    
 
-
+# Subscriber Model
 class Subscriber(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(String(50), unique=True)

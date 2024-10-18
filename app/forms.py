@@ -7,7 +7,6 @@ from wtforms.validators import DataRequired, EqualTo, Email, Length, ValidationE
 from app.models import db, User, Subscriber
 from app import Config
 
-#-----SignupForm------#
 
 class SignupForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(min=6, max=25)])
@@ -26,18 +25,11 @@ class SignupForm(FlaskForm):
         if user is not None:
             raise ValidationError("This email address is already exist.")
 
-#-----End of SignupForm------#
-        
-#-----LoginForm------#
 
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     remember_me = BooleanField("Remember Me")
-
-#-----End of LoginForm------#
-
-#-----PostForm------#
 
 
 class PostForm(FlaskForm):
@@ -56,9 +48,6 @@ class PostForm(FlaskForm):
             ]
         )
     
-#-----End of PostForm-----#
-
-
 
 class EditPostForm(FlaskForm):
     title = StringField(validators=[DataRequired(), Length(max=50)])
@@ -76,6 +65,5 @@ class SubscribeForm(FlaskForm):
             raise ValidationError("This email address is already exist.")
         
 
-
-class TestForm(FlaskForm):
-    tester = SelectField("Tester", choices=[(1,"One"), (2,"Two"), (3,"Three")])
+class CategoryForm(FlaskForm):
+    category = StringField("Add Category:", validators=[DataRequired(), Length(max=50)])

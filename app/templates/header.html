@@ -5,7 +5,7 @@
 
                 <!--Logo Container-->
                 <a class="inline-block" href="{{ url_for('main.index') }}">
-                    <p class="font-extrabold">THE CODING JOURNAL</p>
+                    <p class="font-extrabold">{{ app_name }}</p>
                 </a>
 
                 <!--Menu Burger Icon-->
@@ -19,9 +19,13 @@
 
             <!--Collapsible Menu-->
             <ul class="mb-5 hidden md:flex md:mb-0 md:items-center" id="collapse">
+            {% if categories %}
                 {% for category in categories %}
-                    <li class="{% if loop.last %}pb-2{% endif %} md:pb-0"><a class="navbar-link" href="{{ url_for('main.category_page', category_key=category.key) }}">{{category.name}}</a></li>
+                <li class="{% if loop.last %}pb-2{% endif %} md:pb-0"><a class="navbar-link" href="{{ url_for('main.category_page', category_key=category.key) }}">{{category.name}}</a></li>
                 {% endfor %}
+            {% else %}
+                <p>None</p>
+            {% endif %}
             </ul>
 
         </div>

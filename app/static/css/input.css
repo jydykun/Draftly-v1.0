@@ -8,3 +8,22 @@
     hover:pl-6 hover:font-bold hover:bg-slate-800
     md:hover:pl-3 md:hover:bg-inherit md:hover:font-normal md:hover:text-slate-400
 }
+
+.primary {
+    @apply bg-indigo-600
+}
+
+.draftly-text {
+    @apply text-indigo-600
+}
+
+.draftly-nav-bg {
+    @apply primary text-white
+}
+.draftly-nav-link {
+    @apply transition-all hover:text-indigo-300
+}
+
+.draftly-button {
+    @apply primary text-white transition-all hover:bg-indigo-800
+}

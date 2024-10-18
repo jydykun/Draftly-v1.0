@@ -5,21 +5,9 @@
 {% endblock %}
 
 {% block body %}
-{#
-  <form action="{{ url_for('auth.signup') }}" method="POST" novalidate>
-    {{ form.hidden_tag() }}
-    {{ form.username.label }} {{ form.username }} {{ form.username.errors[0] }}
-    {{ form.password.label }} {{ form.password }} {{ form.password.errors[0] }}
-    {{ form.confirm_password.label }} {{ form.confirm_password }} {{ form.confirm_password.errors[0] }}
-    {{ form.email.label }} {{ form.email }} {{ form.email.errors[0] }}
-    {{ form.recaptcha }} {{ form.recaptcha.errors[0] }}
-    <button type="submit">Submit</button>
-  </form>
-#}
-
 
   <div class="flex flex-col justify-center items-center w-full h-screen bg-gradient-to-t from-slate-900 to-slate-800">
-    <p class="my-5 font-extrabold text-2xl text-slate-100">THE CODING JOURNAL</p>
+    <p class="my-5 font-extrabold text-2xl text-slate-100">{{app_name}}</p>
     <div class="w-full bg-slate-100 md:rounded-md md:w-96 md:shadow-md md:shadow-slate-900">
       <div class="flex flex-col p-10">
         <p class="mb-3 text-center text-2xl font-bold">SIGN UP</p>
