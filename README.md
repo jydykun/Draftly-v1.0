@@ -65,5 +65,3 @@ gunicorn wsgi:app
 - Post analytics and visitor tracking.
 - Implement search functionality across posts.
 - Provide commenting functionality.
-
-asdasd
