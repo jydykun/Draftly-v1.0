@@ -27,8 +27,4 @@ def create_app():
     from app.views.auth import auth
     app.register_blueprint(auth)
 
-    # For testing
-    from app.views.test import test
-    app.register_blueprint(test)
-
     return app
