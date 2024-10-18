@@ -53,7 +53,11 @@ def index():
 
 @main.route("/<category_key>")
 def category_page(category_key):
+    
     category = db.first_or_404(db.select(Category).where(Category.key == category_key))
+    
+    title=f"{category.name} - {Config.APP_NAME}"
+    
     posts = db.paginate(db.select(Post).where(Post.category_id == category.id).order_by(Post.timestamp.desc()), per_page=9, error_out=False)
 
     #CSS Classes
@@ -71,7 +75,7 @@ def category_page(category_key):
         #post.body_without_images = remove_image_tag(post.body)
         post.text_only = remove_html_tags(post.body)
 
-    return render_template("category_page.html", category=category, category_class=category_class, posts=posts)
+    return render_template("category_page.html", title=title, category=category, category_class=category_class, posts=posts)
 
 
 @main.route("/dashboard/<username>")
