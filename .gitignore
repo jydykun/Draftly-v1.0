@@ -8,10 +8,13 @@ env/
 .env
 .venv
 
+# Instance
+instance/
+
 # Ignore node_modules folder
 node_modules/
 
-#
+# Migration
 migration/
 
 # Log files
