@@ -13,7 +13,7 @@
     <div class="col-span-10 h-dvh overflow-y-scroll">
         <main>
             <div class="flex justify-between items-center p-5 border-b-2">
-                <p class="text-xl font-bold">Edit Post</p>
+                <p class="text-xl font-bold draftly-text">Edit Post</p>
             </div>
 
             <div class="m-5">
@@ -23,7 +23,7 @@
                     <i class="block my-2 text-sm text-red-600">{{ form.title.errors[0] }}</i>
                     {{ form.body(id="tinymce_editor") }}
                     <i class="block my-2 text-sm text-red-600">{{ form.body.errors[0] }}</i>
-                    {{ form.category.label }}
+                    {{ form.category.label(class="draftly-text-secondary") }}
                     <select class="border-2 p-1" name="category" id="category">
                         {% for category in form.category.choices %}
                             <option value="{{ category[0] }}" {% if category[0] == post.category_id %}selected{% endif %}>
@@ -33,14 +33,14 @@
                     </select>
                     <div>
                     {{ form.replace_image_picker }}
-                        <p class="my-2">Featured Image:</p>
+                        <p class="my-2 draftly-text-secondary">Featured Image:</p>
                         <div class="relative w-fit">
-                            <p id="trigger-modal" class="invisible absolute top-0 left-0 flex justify-center items-center w-full h-full text-xl text-center bg-slate-300/75 cursor-pointer">Replace Image</p>
+                            <p id="trigger-modal" class="draftly-replace-image-btn">Replace Image</p>
                             <img id="image-preview" class="w-40" src="{{ url_for('main.uploaded_image', filename=post.featured_image)}}">
                         </div>
                     </div>
 
-                    <button class="block mt-3 px-5 py-2 rounded-md text-slate-50 bg-slate-900 transition-all hover:bg-slate-400" type="submit">Update</button>
+                    <button class="block mt-3 px-5 py-2 rounded-md draftly-button" type="submit">Update</button>
                 </form>
 
                 <div id="modal" class="fixed left-0 top-0 w-full h-full z-[9999] bg-slate-300/75 hidden">

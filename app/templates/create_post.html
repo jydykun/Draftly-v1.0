@@ -26,9 +26,9 @@
                     <i class="block my-2 text-sm text-red-600">{{ form.body.errors[0] }}</i>
                     <div class="flex">
                         <div class="mr-5">
-                            {{ form.category.label }}{{ form.category(class="border-2 p-1") }}
+                            {{ form.category.label(class="draftly-text-secondary") }}{{ form.category(class="border-2 p-1") }}
                             <div class="mt-2">
-                                {{ form.feature_image.label }}{{ form.feature_image }}
+                                {{ form.feature_image.label(class="draftly-text-secondary") }}{{ form.feature_image }}
                             </div>
                         </div>
                         <img id="preview-image" class="w-40 bg-gray-300" src="">

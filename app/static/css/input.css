@@ -17,6 +17,10 @@
     @apply text-indigo-600
 }
 
+.draftly-text-secondary {
+    @apply text-gray-700
+}
+
 .draftly-nav-bg {
     @apply primary text-white
 }
@@ -26,4 +30,9 @@
 
 .draftly-button {
     @apply primary text-white transition-all hover:bg-indigo-800
+}
+
+.draftly-replace-image-btn {
+    @apply invisible absolute top-0 left-0 flex justify-center items-center
+    w-full h-full text-xl text-center text-white bg-gray-700/75 cursor-pointer
 }

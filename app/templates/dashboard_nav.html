@@ -1,6 +1,6 @@
 <nav class="col-span-2 draftly-nav-bg">
     <div class="flex flex-col justify-between h-screen p-5">
-        <a class="block py-3 font-extrabold" href="{{ url_for('main.index')}}">THE CODING JOURNAL</a>
+        <a class="block py-3 font-extrabold" href="{{ url_for('main.index')}}">{{ app_name }}</a>
         <ul class="grow">
             <li class="pl-2 py-3 border-b-2 border-indigo-700 draftly-nav-link"><a href="{{ url_for('main.profile', username=current_user.username)}}">Dashboard</a></li>
             <li class="flex items-center pl-2 py-3 border-b-2 border-indigo-700 draftly-nav-link">
