@@ -66,4 +66,8 @@ gunicorn wsgi:app
 - Implement search functionality across posts.
 - Provide commenting functionality.
 
+## 💡Screenshots
+
 ![My Local Image](screenshot/ss1.png)
+![My Local Image](screenshot/ss2.png)
+![My Local Image](screenshot/ss3.png)
