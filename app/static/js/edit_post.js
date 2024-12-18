@@ -30,7 +30,8 @@ async function modalGallery(){
             const response = await fetch("/api/images", {
                 method: "GET",
                 headers: {
-                    "Content-Type" : "application/json"
+                    "Content-Type" : "application/json",
+                    "Accept": "application/json"
                 }
             });
 
